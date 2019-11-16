@@ -1,6 +1,7 @@
 # %%
 
 import os
+
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 import numpy as np
@@ -11,8 +12,6 @@ import os
 import sys
 from PIL import Image
 
-
-
 # %% md
 
 ## Load data
@@ -20,7 +19,7 @@ from PIL import Image
 # %%
 
 
-masks = glob.glob("/data1/shengjun/data/handbig/train/test/*.bmp")
+masks = glob.glob("/data1/shengjun/data/handbig/train/HGR1/*.bmp")
 orgs = list(map(lambda x: x.replace(".bmp", ".jpg"), masks))
 
 # %%
@@ -46,7 +45,7 @@ print(imgs_np.shape, masks_np.shape)
 
 from keras_unet.utils import plot_imgs
 
-plot_imgs(org_imgs=imgs_np, mask_imgs=masks_np, nm_img_to_plot=10, figsize=6)
+plot_imgs(org_imgs=imgs_np, mask_imgs=masks_np, nm_img_to_plot=10, figsize=60)
 
 # %% md
 
@@ -82,7 +81,7 @@ print(x.shape, y.shape)
 
 from sklearn.model_selection import train_test_split
 
-x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.9, random_state=0)
+x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.3, random_state=0)
 
 print("x_train: ", x_train.shape)
 print("y_train: ", y_train.shape)
@@ -117,7 +116,7 @@ xx, yy = sample_batch
 print(xx.shape, yy.shape)
 from keras_unet.utils import plot_imgs
 
-plot_imgs(org_imgs=xx, mask_imgs=yy, nm_img_to_plot=2, figsize=6)
+plot_imgs(org_imgs=xx, mask_imgs=yy, nm_img_to_plot=2, figsize=60)
 
 # %% md
 
@@ -177,8 +176,8 @@ model.compile(
 history = model.fit_generator(
     train_gen,
     steps_per_epoch=200,
-    epochs=50,
-
+    epochs=500,
+    max_queue_size=5,
     validation_data=(x_val, y_val),
     callbacks=[callback_checkpoint]
 )
@@ -206,6 +205,6 @@ y_pred = model.predict(x_val)
 
 from keras_unet.utils import plot_imgs
 
-plot_imgs(org_imgs=x_val, mask_imgs=y_val, pred_imgs=y_pred, nm_img_to_plot=10)
+plot_imgs(org_imgs=x_val, mask_imgs=y_val, pred_imgs=y_pred, nm_img_to_plot=30)
 
 # %%
