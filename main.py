@@ -19,7 +19,7 @@ from PIL import Image
 # %%
 
 
-masks = glob.glob("/data1/shengjun/data/handbig/train/HGR1/*.bmp")
+masks = glob.glob("/data1/shengjun/data/handbig/HGR1/*.bmp")
 orgs = list(map(lambda x: x.replace(".bmp", ".jpg"), masks))
 
 # %%
