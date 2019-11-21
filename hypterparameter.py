@@ -156,16 +156,16 @@ def diabetes(x_train, y_train, x_val, y_val, params):
     return history, model
 
 p = {'activation':['relu', 'elu'],
-     'optimizer': ['Adam', 'AdaDelta'],
+     'optimizer': ['AdaDelta'],
      'losses': ['logcosh'],
      'shapes': ['brick'],
      'first_neuron': [32],
      'dropout': [.2, .3],
-     'batch_size': [1, 2, 3, 4, 5, 6],
-     'num_layers':[2,3,4,5],
-     'output_activation':['sigmoid' , 'softmax'],
-     'filters': [16,32,64,128],
-     'epochs': [1,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]}
+     'batch_size': [4],
+     'num_layers':[5],
+     'output_activation':['sigmoid'],
+     'filters': [64],
+     'epochs': [30]}
 ## Initialize network
 t = talos.Scan(x=x_train, y=y_train, x_val=x_val, y_val=y_val, params=p, model=diabetes, reduction_metric='val_iou', experiment_name='diabetes')
 # %%

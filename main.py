@@ -18,8 +18,8 @@ from PIL import Image
 
 # %%
 
-
 masks = glob.glob("/data1/shengjun/data/handbig/HGR1/*.bmp")
+# masks = glob.glob("C:/Users/sheng/Downloads/HGR1/*.bmp")
 orgs = list(map(lambda x: x.replace(".bmp", ".jpg"), masks))
 
 # %%
@@ -45,7 +45,7 @@ print(imgs_np.shape, masks_np.shape)
 
 from keras_unet.utils import plot_imgs
 
-plot_imgs(org_imgs=imgs_np, mask_imgs=masks_np, nm_img_to_plot=10, figsize=60)
+plot_imgs(fileName='source.png',org_imgs=imgs_np, mask_imgs=masks_np, nm_img_to_plot=30, figsize=6)
 
 # %% md
 
@@ -83,6 +83,8 @@ from sklearn.model_selection import train_test_split
 
 x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.3, random_state=0)
 
+leng = len(x_train);
+
 print("x_train: ", x_train.shape)
 print("y_train: ", y_train.shape)
 print("x_val: ", x_val.shape)
@@ -97,7 +99,7 @@ print("y_val: ", y_val.shape)
 from keras_unet.utils import get_augmented
 
 train_gen = get_augmented(
-    x_train, y_train, batch_size=2,
+    x_train, y_train, batch_size=4,
     data_gen_args=dict(
         rotation_range=5.,
         width_shift_range=0.05,
@@ -116,7 +118,7 @@ xx, yy = sample_batch
 print(xx.shape, yy.shape)
 from keras_unet.utils import plot_imgs
 
-plot_imgs(org_imgs=xx, mask_imgs=yy, nm_img_to_plot=2, figsize=60)
+plot_imgs(fileName='augment.png',org_imgs=xx, mask_imgs=yy, nm_img_to_plot=30, figsize=6)
 
 # %% md
 
@@ -130,11 +132,12 @@ input_shape = x_train[0].shape
 
 model = custom_unet(
     input_shape,
-    filters=32,
+    filters=64,
     use_batch_norm=True,
-    dropout=0.3,
+    dropout=0.2,
     dropout_change_per_layer=0.0,
-    num_layers=4
+    num_layers=5,
+    output_activation='sigmoid'
 )
 
 # %%
@@ -149,7 +152,7 @@ model.summary()
 
 from keras.callbacks import ModelCheckpoint
 
-model_filename = 'segm_model_v3.h5'
+model_filename = 'segm_model_v4.h5'
 callback_checkpoint = ModelCheckpoint(
     model_filename,
     verbose=1,
@@ -164,7 +167,8 @@ from keras_unet.metrics import iou, iou_thresholded
 from keras_unet.losses import jaccard_distance
 
 model.compile(
-    optimizer=Adam(),
+    optimizer='AdaDelta',
+    # optimizer=Adam(),
     # optimizer=SGD(lr=0.01, momentum=0.99),
     loss='binary_crossentropy',
     # loss=jaccard_distance,
@@ -175,8 +179,8 @@ model.compile(
 
 history = model.fit_generator(
     train_gen,
-    steps_per_epoch=200,
-    epochs=500,
+    steps_per_epoch=leng / 4,
+    epochs=50,
     max_queue_size=5,
     validation_data=(x_val, y_val),
     callbacks=[callback_checkpoint]
@@ -190,7 +194,7 @@ history = model.fit_generator(
 
 from keras_unet.utils import plot_segm_history
 
-plot_segm_history(history)
+plot_segm_history(history, fileName1='loss.png', fileName2='acc.png')
 
 # %% md
 
@@ -205,6 +209,12 @@ y_pred = model.predict(x_val)
 
 from keras_unet.utils import plot_imgs
 
-plot_imgs(org_imgs=x_val, mask_imgs=y_val, pred_imgs=y_pred, nm_img_to_plot=30)
+plot_imgs(fileName='val1.png', org_imgs=x_val, mask_imgs=y_val, pred_imgs=y_pred, nm_img_to_plot=30)
+
+y_pred2 = model.predict(x_train)
+
+
+# %%
+plot_imgs(fileName='val2.png',org_imgs=x_train, mask_imgs=y_train, pred_imgs=y_pred2, nm_img_to_plot=35)
 
 # %%

@@ -49,7 +49,7 @@ def get_augmented(
         return train_generator
 
 
-def plot_segm_history(history, metrics=['iou', 'val_iou'], losses=['loss', 'val_loss']):
+def plot_segm_history(history, metrics=['iou', 'val_iou'], losses=['loss', 'val_loss'], fileName1='temp1.png', fileName2='temp2.png'):
     # summarize history for iou
     plt.figure(figsize=(12,6))
     for metric in metrics:
@@ -60,6 +60,7 @@ def plot_segm_history(history, metrics=['iou', 'val_iou'], losses=['loss', 'val_
     #plt.yticks(np.arange(0.3, 1, step=0.02), fontsize=35)
     #plt.xticks(fontsize=35)
     plt.legend(metrics, loc='center right', fontsize=15)
+    plt.savefig(fileName1)
     plt.show()
     # summarize history for loss
     plt.figure(figsize=(12,6))    
@@ -71,7 +72,8 @@ def plot_segm_history(history, metrics=['iou', 'val_iou'], losses=['loss', 'val_
     #plt.yticks(np.arange(0, 0.2, step=0.005), fontsize=35)
     #plt.xticks(fontsize=35)
     plt.legend(losses, loc='center right', fontsize=15)
-    plt.show()
+    plt.savefig(fileName2)
+    #plt.show()
 
 
 def mask_to_red(mask):
@@ -110,7 +112,8 @@ def mask_to_rgba(mask, color='red'):
 
     
 def plot_imgs(org_imgs, 
-              mask_imgs, 
+              mask_imgs,
+              fileName='temp.png',
               pred_imgs=None, 
               nm_img_to_plot=10, 
               figsize=4,
@@ -159,8 +162,8 @@ def plot_imgs(org_imgs,
             axes[m, 2].imshow(mask_to_red(zero_pad_mask(mask_imgs[im_id], desired_size=org_imgs_size)), cmap=get_cmap(mask_imgs), alpha=alpha)
             axes[m, 2].set_axis_off()
         im_id += 1
-
-    plt.show()
+    plt.savefig(fileName)
+    #plt.show()
 
 
 def zero_pad_mask(mask, desired_size):

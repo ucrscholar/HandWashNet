@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Copy of project-level server 'lambda-quad.engr.ucr.edu'" createEmptyFolders="true" autoUploadExternalChanges="true">
+  <component name="PublishConfigData" autoUpload="Always" serverName="shengjun@lambda-quad.engr.ucr.edu:22">
     <serverData>
-      <paths name="Copy of project-level server 'lambda-quad.engr.ucr.edu'">
+      <paths name="shengjun@lambda-quad.engr.ucr.edu:22">
         <serverdata>
           <mappings>
-            <mapping deploy="/unet2" local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="runzeli@192.168.7.88:22">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/shengjun/unet2" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
