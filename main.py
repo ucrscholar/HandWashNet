@@ -12,6 +12,8 @@ import os
 import sys
 from PIL import Image
 
+import json, codecs
+
 # %% md
 
 ## Load data
@@ -45,7 +47,7 @@ print(imgs_np.shape, masks_np.shape)
 
 from keras_unet.utils import plot_imgs
 
-plot_imgs(fileName='source.png',org_imgs=imgs_np, mask_imgs=masks_np, nm_img_to_plot=30, figsize=6)
+plot_imgs(fileName='source.png', org_imgs=imgs_np, mask_imgs=masks_np, nm_img_to_plot=30, figsize=6)
 
 # %% md
 
@@ -118,7 +120,7 @@ xx, yy = sample_batch
 print(xx.shape, yy.shape)
 from keras_unet.utils import plot_imgs
 
-plot_imgs(fileName='augment.png',org_imgs=xx, mask_imgs=yy, nm_img_to_plot=30, figsize=6)
+plot_imgs(fileName='augment.png', org_imgs=xx, mask_imgs=yy, nm_img_to_plot=30, figsize=6)
 
 # %% md
 
@@ -186,6 +188,9 @@ history = model.fit_generator(
     callbacks=[callback_checkpoint]
 )
 
+from keras_unet.utils import saveHist
+
+saveHist(model_filename + '.txt', history)
 # %% md
 
 ## Plot training history
@@ -213,8 +218,7 @@ plot_imgs(fileName='val1.png', org_imgs=x_val, mask_imgs=y_val, pred_imgs=y_pred
 
 y_pred2 = model.predict(x_train)
 
-
 # %%
-plot_imgs(fileName='val2.png',org_imgs=x_train, mask_imgs=y_train, pred_imgs=y_pred2, nm_img_to_plot=35)
+plot_imgs(fileName='val2.png', org_imgs=x_train, mask_imgs=y_train, pred_imgs=y_pred2, nm_img_to_plot=35)
 
 # %%
