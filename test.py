@@ -59,7 +59,7 @@ print(imgs_np.max(), masks_np.max())
 # %%
 
 x = np.asarray(imgs_np, dtype=np.float32) / 255
-y = np.asarray(masks_np, dtype=np.float32)
+y = np.asarray(masks_np, dtype=np.float32) /255
 
 # %%
 
@@ -128,7 +128,7 @@ model.summary()
 
 from keras.callbacks import ModelCheckpoint
 
-model_filename = './HDR3/segm_model_v4.h5'
+model_filename = './HDR4/segm_model_v4.h5'
 callback_checkpoint = ModelCheckpoint(
     model_filename,
     verbose=1,
@@ -156,8 +156,8 @@ y_pred = model.predict(x_val)
 
 # %%
 
-from keras_unet.utils import plot_imgs
+from keras_unet.utils import plot_ResultImgs
 
-plot_imgs(fileName='ilab_Gesture G_2019-11-20_16-07-44_top.png',org_imgs=x_val, mask_imgs=y_val, pred_imgs=y_pred, nm_img_to_plot=30)
+plot_ResultImgs(fileName='ilab_Gesture G_2019-11-20_16-07-44_top-2.png',org_imgs=x_val, mask_imgs=y_val, pred_imgs=y_pred, nm_img_to_plot=30)
 
 # %%
