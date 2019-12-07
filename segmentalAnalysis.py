@@ -22,7 +22,8 @@ from keras.models import Model
 
 # %%
 
-masks = glob.glob("C:/videos/ilab_Gesture G_2019-11-20_16-07-44_top/ilab_Gesture G_2019-11-20_16-07-44_top_Depth_*.png")
+masks = glob.glob(
+    "C:/Users/sheng/Videos/ilab_Gesture G_2019-11-20_16-07-44_top/ilab_Gesture G_2019-11-20_16-07-44_top_Depth_*.png")
 orgs = list(map(lambda x: x.replace("Depth", "Color"), masks))
 # masks = glob.glob("C:/Users/sheng/Downloads/HGR1/*.bmp")
 # orgs = list(map(lambda x: x.replace("bmp", "jpg"), masks))
@@ -116,7 +117,7 @@ model.summary()
 
 from keras.callbacks import ModelCheckpoint
 
-model_filename = './HDR4/segm_model_v4.h5'
+model_filename = './HDR6/segm_model_v4.h5'
 callback_checkpoint = ModelCheckpoint(
     model_filename,
     verbose=1,
@@ -159,8 +160,7 @@ for i in range(len(model.layers)):
     print(i, layer.name, layer.output.shape)
 
 # retrieve weights from the second hidden layer
-filters, biases = model.layers[1].get_weights()
-
+filters, biases = model.layers[4].get_weights()
 
 from keras_unet.utils import filter_maps
 
@@ -169,11 +169,40 @@ filter_maps(filters=filters, n_filters=6, m_channel=3, figsize=6)
 
 # How to Visualize Feature Maps
 # redefine model to output right after the first hidden layer
-model = Model(inputs=model.inputs, outputs=model.layers[1].output)
+model = Model(inputs=model.inputs, outputs=model.layers[66].output)
 model.summary()
 
 # get feature map for first hidden layer
 feature_map = model.predict(x_val)
+
+# saliency
+from vis.visualization import visualize_saliency, overlay
+from vis.utils import utils
+
+# Utility to search for layer index by name.
+# Alternatively we can specify this as -1 since it corresponds to the last layer.
+layer_idx = utils.find_layer_idx(model, 'conv2d_22')
+
+f, ax = plt.subplots(6, 2, figsize=(2 * 6, 5 * 6))
+ax[0, 0].set_title("Image A", fontsize=15)
+ax[0, 0].set_axis_off()
+ax[0, 1].set_title("Image B", fontsize=15)
+ax[0, 1].set_axis_off()
+for row in range(1, 6):
+    for i, img in enumerate([x_val[1], x_val[2]]):
+        if row == 1:
+            ax[0, 0].imshow(img, cmap='jet')
+            ax[0, 0].set_axis_off()
+            ax[0, 1].imshow(img, cmap='jet')
+            ax[0, 1].set_axis_off()
+        # 20 is the imagenet index corresponding to `ouzel`
+        grads = visualize_saliency(model, layer_idx, filter_indices=row-1, seed_input=img)
+
+        # visualize grads as heatmap
+        ax[row, i].imshow(grads, cmap='jet')
+        ax[row, i].set_axis_off()
+    print('row: '+str(row))
+plt.show()
 
 from keras_unet.utils import featureMaps
 

@@ -2,7 +2,7 @@
 
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -110,7 +110,8 @@ train_gen = get_augmented(
         zoom_range=0.2,
         horizontal_flip=True,
         vertical_flip=False,
-        fill_mode='constant'
+        fill_mode='constant',
+        cval=1
     ))
 
 # %%

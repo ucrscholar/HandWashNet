@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 import json, codecs
 

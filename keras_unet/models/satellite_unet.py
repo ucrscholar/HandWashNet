@@ -1,8 +1,8 @@
 # https://cdn-sv1.deepsense.ai/wp-content/uploads/2017/04/architecture_details.png
 # https://deepsense.ai/deep-learning-for-satellite-imagery-via-image-segmentation/
 
-from keras.models import Model
-from keras.layers import BatchNormalization, Conv2D, Conv2DTranspose, MaxPooling2D, UpSampling2D, Input, concatenate
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import BatchNormalization, Conv2D, Conv2DTranspose, MaxPooling2D, UpSampling2D, Input, concatenate
 
 def bn_conv_relu(input, filters, bachnorm_momentum, **conv2d_args):
     x = BatchNormalization(momentum=bachnorm_momentum)(input)

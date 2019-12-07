@@ -2,7 +2,7 @@
 
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,14 +11,14 @@ import glob
 import os
 import sys
 from PIL import Image
-
+import os.path
 # %% md
 
 ## Load data
 
 # %%
 
-masks = glob.glob("C:/videos/ilab_Gesture G_2019-11-20_16-07-44_top/ilab_Gesture G_2019-11-20_16-07-44_top_Depth_*.png")
+masks = glob.glob("C:/Videos/ilab_Gesture A_2019-11-28_15-14-15_top/ilab_Gesture A_2019-11-28_15-14-15_top_Depth_*.png")
 orgs = list(map(lambda x: x.replace("Depth", "Color"), masks))
 #masks = glob.glob("C:/Users/sheng/Downloads/HGR1/*.bmp")
 #orgs = list(map(lambda x: x.replace("bmp", "jpg"), masks))
@@ -28,8 +28,9 @@ orgs = list(map(lambda x: x.replace("Depth", "Color"), masks))
 imgs_list = []
 masks_list = []
 for image, mask in zip(orgs, masks):
-    imgs_list.append(np.array(Image.open(image).resize((384, 384))))
-    masks_list.append(np.array(Image.open(mask).resize((384, 384))))
+    if os.path.isfile(image) and os.path.isfile(mask):
+        imgs_list.append(np.array(Image.open(image).resize((384, 384))))
+        masks_list.append(np.array(Image.open(mask).resize((384, 384))))
 
 imgs_np = np.asarray(imgs_list)
 masks_np = np.asarray(masks_list)
@@ -126,9 +127,9 @@ model.summary()
 
 # %%
 
-from keras.callbacks import ModelCheckpoint
+from tensorflow.keras.callbacks import ModelCheckpoint
 
-model_filename = './HDR4/segm_model_v4.h5'
+model_filename = './HDR6/segm_model_v4.h5'
 callback_checkpoint = ModelCheckpoint(
     model_filename,
     verbose=1,
@@ -138,7 +139,7 @@ callback_checkpoint = ModelCheckpoint(
 
 # %%
 
-from keras.optimizers import Adam, SGD
+from tensorflow.keras.optimizers import Adam, SGD
 from keras_unet.metrics import iou, iou_thresholded
 from keras_unet.losses import jaccard_distance
 
@@ -158,6 +159,6 @@ y_pred = model.predict(x_val)
 
 from keras_unet.utils import plot_ResultImgs
 
-plot_ResultImgs(fileName='ilab_Gesture G_2019-11-20_16-07-44_top-2.png',org_imgs=x_val, mask_imgs=y_val, pred_imgs=y_pred, nm_img_to_plot=30)
+plot_ResultImgs(fileName='ilab_Gesture A_2019-11-26_19-48-39_top-1.png',org_imgs=x_val, mask_imgs=y_val, pred_imgs=y_pred, nm_img_to_plot=30)
 
 # %%
