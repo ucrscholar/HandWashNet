@@ -153,7 +153,7 @@ model.summary()
 
 # %%
 
-from keras.callbacks import ModelCheckpoint
+from tensorflow.keras.callbacks import ModelCheckpoint
 
 model_filename = 'segm_model_v4.h5'
 callback_checkpoint = ModelCheckpoint(
@@ -165,7 +165,7 @@ callback_checkpoint = ModelCheckpoint(
 
 # %%
 
-from keras.optimizers import Adam, SGD
+from tensorflow.keras.optimizers import Adam, SGD
 from keras_unet.metrics import iou, iou_thresholded
 from keras_unet.losses import jaccard_distance
 
