@@ -4,9 +4,15 @@
 This network is used to predict the next frame of an artificially
 generated movie which contains moving squares.
 """
+
+import os
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv3D
-from tensorflow.keras.layers import ConvLSTM2D
+from tensorflow.keras.layers import ConvLSTM2D, LSTM
 from tensorflow.keras.layers import BatchNormalization
 import numpy as np
 import pylab as plt
@@ -14,10 +20,18 @@ import pylab as plt
 # We create a layer which take as input movies of shape
 # (n_frames, width, height, channels) and returns a movie
 # of identical shape.
+from tensorflow.compat.v1 import ConfigProto
+from tensorflow.compat.v1 import InteractiveSession
+
+config = ConfigProto()
+#config.gpu_options.per_process_gpu_memory_fraction = 0.8
+config.gpu_options.allow_growth = True
+session = InteractiveSession(config=config)
+
 
 seq = Sequential()
 seq.add(ConvLSTM2D(filters=40, kernel_size=(3, 3),
-                   input_shape=(None, 40, 40, 3),
+                   input_shape=(None, 40, 40, 1),
                    padding='same', return_sequences=True))
 seq.add(BatchNormalization())
 
@@ -105,7 +119,7 @@ def generate_movies(n_samples=1200, n_frames=15):
 
 from tensorflow.keras.callbacks import ModelCheckpoint
 
-model_filename = 'lstm_model_v1.h5'
+model_filename = 'lstm_model_v3.h5'
 callback_checkpoint = ModelCheckpoint(
     model_filename,
     verbose=1,
@@ -113,18 +127,36 @@ callback_checkpoint = ModelCheckpoint(
     save_best_only=True,
 )
 
-noisy_movies, shifted_movies = generate_movies(n_samples=1200)
-seq.fit(noisy_movies[:1000], shifted_movies[:1000], batch_size=10,
-        epochs=300, validation_split=0.05, callbacks=[callback_checkpoint])
 
+noisy_movies, shifted_movies = generate_movies(n_samples=1200)
+
+
+
+history = seq.fit(noisy_movies[:1000], shifted_movies[:1000], batch_size=10,
+        epochs=1000, validation_split=0.05, callbacks=[callback_checkpoint])
+#seq.load_weights("C:/Users/sheng/PycharmProjects/unet2/lstm/lstm_model_v1.h5")
 # Testing the network on one movie
 # feed it with the first 7 positions and then
 # predict the new positions
+#TODO this path has some problem when run in server or local machine
+from ilab.utils import plot_segm_history
+
+plot_segm_history(history, metrics=['loss', 'val_loss'],fileName1='loss.png', fileName2='acc.png')
+
 which = 1004
 track = noisy_movies[which][:7, ::, ::, ::]
 
 for j in range(16):
     new_pos = seq.predict(track[np.newaxis, ::, ::, ::, ::])
+
+    for i in range(0,new_pos.shape[1]):
+        fig = plt.figure(figsize=(10, 5))
+        ax = fig.add_subplot(121)
+        toplot = new_pos[0, i, ::, ::, 0]
+        plt.imshow(toplot)
+        ax = fig.add_subplot(122)
+        plt.imshow(track[i, ::, ::, 0])
+        plt.savefig('{0}_{1}_predict.png'.format((j+1),  (i + 1)))
     new = new_pos[::, -1, ::, ::, ::]
     track = np.concatenate((track, new), axis=0)
 
