@@ -24,7 +24,7 @@ create_new_test_splits = [False, True][0]
 if viz_video:
     import skvideo.io
 
-DATASET = path.expanduser("C:/Users/sheng/Downloads/db/")
+DATASET = path.expanduser("/data1/shengjun/db/")
 label_types_all = ["low", "mid", "eval", "high"]
 
 # Base folders

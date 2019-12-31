@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import tensorflow
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 import json, codecs
@@ -450,3 +451,33 @@ def loadHist(path):
     with codecs.open(path, 'r', encoding='utf-8') as file:
         n = json.loads(file.read())
     return n
+
+import smtplib
+def notify(name,content):
+    fromaddr = 'shezhang@ucr.edu'
+    toaddrs = 'shengjun.zhang@ucr.edu'
+    msg = "\r\n".join([
+        "From: shezhang@ucr.edu",
+        "To: shengjun.zhang@ucr.edu",
+        "Subject: Progress Report-{}".format(name),
+        "",
+        "Why, oh why\r\n{}".format(content)
+    ])
+    username = 'shezhang@ucr.edu'
+    password = 'Broadcreate.com139822'
+    server = smtplib.SMTP('smtp.gmail.com:587')
+    server.ehlo()
+    server.starttls()
+    server.login(username, password)
+    server.sendmail(fromaddr, toaddrs, msg)
+    server.quit()
+
+import datetime
+class MyCustomCallback(tensorflow.keras.callbacks.Callback):
+    def __init__(self, total=0):
+        self.total= total;
+
+    def on_epoch_end(self, epoch, logs=None):
+        x='Training: epoch {}/{} begins at {}'.format(epoch, self.total, datetime.datetime.now().time())
+        notify('convLSTM', x)
+

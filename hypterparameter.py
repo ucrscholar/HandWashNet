@@ -14,6 +14,7 @@ from PIL import Image
 
 
 
+
 # %% md
 
 ## Load data
