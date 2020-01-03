@@ -8,24 +8,25 @@ generated movie which contains moving squares.
 import os
 
 from tensorflow_core.python import expand_dims
-
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+#TODO change the device
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 
 config = ConfigProto(allow_soft_placement=False)
-config.gpu_options.per_process_gpu_memory_fraction = 0.9
-# config.gpu_options.allow_growth = True
+# config.gpu_options.per_process_gpu_memory_fraction = 0.9
+config.gpu_options.allow_growth = True
 session = InteractiveSession(config=config)
 
-
+from tensorflow.keras import preprocessing
 from keras_preprocessing.image import ImageDataGenerator
 import cv2
 from numpy import random
 import csv
 
-from tensorflow_core.python.keras import Input
-from tensorflow_core.python.keras.layers import Dense, Flatten, AveragePooling3D, Dropout, MaxPooling2D, Lambda
+from tensorflow_core.python.keras import Input, optimizers
+from tensorflow_core.python.keras.layers import Dense, Flatten, AveragePooling3D, Dropout, MaxPooling2D, Lambda, Conv2D, \
+    Activation
 from tensorflow_core.python.keras.utils.np_utils import to_categorical
 
 from ilab.utils import get_augmented
@@ -39,8 +40,14 @@ from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.layers import Reshape
 
 import numpy as np
-import pylab as plt
+#import pylab as plt
 
+import tensorflow as tf
+
+import IPython.display as display
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
 # We create a layer which take as input movies of shape
 # (n_frames, width, height, channels) and returns a movie
 # of identical shape.
@@ -50,10 +57,191 @@ IMG_HEIGHT = 50;
 IMG_CHANNEL = 3;
 CLASS_NUM=52;
 BATCH_SIZE = 10;
+EPOCH_NUM = 50;
 
 m_width = 50
 m_heigh = 50
 batch_size = 10
+
+import pandas as pd
+import dask
+import dask.dataframe as dd
+import numpy as np
+from skimage.io import imread
+from tensorflow_core.python.keras.callbacks import EarlyStopping, LambdaCallback
+
+from sklearn.metrics import r2_score
+
+# Print the batch number at the beginning of every batch.
+batch_print_callback = LambdaCallback(
+    on_batch_begin=lambda batch,logs: print('r1',batch))
+
+class MetricsCallback(tf.keras.callbacks.Callback):
+    def on_train_begin(self, logs={}):
+        self.losses = []
+    def on_epoch_end(self, epoch, logs=None):
+        if epoch:
+            print(self.validation_data[0])
+            x_test = self.validation_data[0]
+            y_test = self.validation_data[1]
+            predictions = self.model.predict(x_test)
+            print('r2:', r2_score(predictions, y_test).round(2))
+
+def tfdata(csv_file):
+    # list of name, degree, score
+    '''    nme = ["aparna", "pankaj", "sudhir", "Geeku"]
+    deg = ["MBA", "BCA", "M.Tech", "MBA"]
+    scr = [90, 40, 80, 98]
+
+    # dictionary of lists
+    dict = {'name': nme, 'degree': deg, 'score': scr}
+
+    df = pd.DataFrame(dict)
+
+    # saving the dataframe
+    df.to_csv('file1.csv')
+
+    df.to_parquet('df.parquet.gzip', compression = 'gzip')  # doctest: +SKIP
+    pd.read_parquet('df.parquet.gzip')  # doctest: +SKIP
+'''
+
+    df = pd.read_csv(r"C:\\Users\\sheng\\Downloads\\cifar-10\\trainLabels.csv", dtype='str')
+
+    print(df.head())
+    print(df.dtypes)
+    #df['label'] = pd.Categorical(df['label'])
+    #df['label'] = df.label.cat.codes
+    #df['id'] = df['id']+'.png'
+
+    def append_ext(fn):
+        return fn + ".png"
+
+    df['id'] = df['id'].apply(append_ext)
+
+    print(df.head())
+
+
+    classes = ['dog', 'cat'] * 1000
+
+    filenames = []
+    for i, cls in enumerate(classes):
+        filename = 'C:/Users/sheng/Downloads/cifar-10/xx/{}.png'.format(i)
+        pixel_val = 1 if cls == 'cat' else 0
+        plt.imsave(filename, pixel_val * np.ones((3, 3, 3)))
+        filenames.append(filename)
+
+    df = pd.DataFrame({'filename': filenames, 'class': classes}).sample(frac=1).reset_index(drop=True)
+    classes_list = df['class'].unique().tolist()
+
+
+
+
+
+    datagen = ImageDataGenerator(rescale=1. / 255, validation_split=0.25)
+    train_generator = datagen.flow_from_dataframe(dataframe=df, #directory=r"C:\\Users\\sheng\\Downloads\\cifar-10\\train\\",
+                                                  #x_col="id", y_col="label",
+                                                  subset='training', class_mode="categorical", target_size=(32, 32), batch_size=10)
+
+    validation_generator = datagen.flow_from_dataframe(dataframe=df, #directory=r"C:\\Users\\sheng\\Downloads\\cifar-10\\train\\",
+                                                  #x_col="id", y_col="label",
+                                                  subset='validation', class_mode="categorical", target_size=(32, 32), batch_size=10)
+    '''
+    train_generator = datagen.flow_from_directory(
+        #directory=r"C:/Users/sheng/Downloads/cifar-10/train/",
+        directory=r"C:/Users/sheng/Downloads/cifar-10/train/",
+        target_size=(32, 32),
+        color_mode="rgb",
+        batch_size=32,
+        class_mode="categorical",
+        shuffle=True,
+        seed=42
+    )
+    validation_generator = datagen.flow_from_directory(
+        #directory=r"C:/Users/sheng/Downloads/cifar-10/train/",
+        directory=r"C:/Users/sheng/Downloads/cifar-10/train/",
+        target_size=(32, 32),
+        color_mode="rgb",
+        batch_size=32,
+        class_mode="categorical",
+        shuffle=True,
+        seed=42
+    )'''
+
+    model = Sequential()
+    model.add(Conv2D(32, (3, 3), padding='same',
+                     input_shape=(32, 32, 3)))
+    model.add(Activation('relu'))
+    model.add(Conv2D(32, (3, 3)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+
+    model.add(Conv2D(64, (3, 3), padding='same'))
+    model.add(Activation('relu'))
+    model.add(Conv2D(64, (3, 3)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+
+    model.add(Flatten())
+    model.add(Dense(512))
+    model.add(Activation('relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(2, activation='softmax'))
+
+    model.compile(loss="categorical_crossentropy")
+
+    model.summary()
+
+
+    STEP_SIZE_TRAIN = train_generator.n // train_generator.batch_size
+    STEP_SIZE_VALID = validation_generator.n // validation_generator.batch_size
+    model.fit_generator(generator=train_generator,
+                        steps_per_epoch=STEP_SIZE_TRAIN,
+                        validation_data=validation_generator,
+                        validation_steps=STEP_SIZE_VALID,
+                        epochs=10, callbacks=[MetricsCallback(),batch_print_callback])
+
+
+
+
+
+
+
+
+    filename = data_path + '2000-01.parquet'
+    '''df = pd.read_csv(data_path + csv_file)
+    print(df.head())
+    print(df.dtypes)
+    df['label'] = pd.Categorical(df['label'])
+    df['label'] = df.label.cat.codes
+
+    print(df.head())
+
+    target = df.pop('name')
+
+    filename = data_path + csv_file
+    df = dd.read_csv(filename, dtype='str')
+    print(df.head(2))
+
+    # convert imread function as delayed
+    delayed_imread = dask.delayed(imread, pure=True)
+
+    # give dask information about the function output type
+    df['name'].apply(imread, meta=('img_loaded', np.uint8)).compute()
+
+
+    df.to_parquet(filename, engine='fastparquet')
+    '''
+    # OR turn it into dask.dealayed, which infers output type `object`
+    # df['name'].apply(delayed_imread).compute()
+    df1 = dd.read_parquet(filename, engine='fastparquet')
+    # df1.apply(print, axis=1).compute()
+    # print(df1['name'].shape())
+
+
+#tfdata('pandaV.cvs')
+
 
 seq = Sequential()
 #seq.add(Lambda(lambda x: expand_dims(x, 0)))
@@ -121,12 +309,7 @@ random.shuffle(val_list)
 
 
 #######################################################
-import tensorflow as tf
 
-import IPython.display as display
-from PIL import Image
-import numpy as np
-import matplotlib.pyplot as plt
 
 
 # Set `num_parallel_calls` so multiple images are loaded/processed in parallel.
@@ -136,7 +319,7 @@ import matplotlib.pyplot as plt
 #######################################################
 # Here, `x_set` is list of path to the images
 # and `y_set` are the associated classes.
-train_sample_num = 0;
+'''train_sample_num = 0;
 verify_sample_num = 0;
 for base_dir in val_list:
     rgb_sample_dir = os.path.join(base_dir, 'rgb')
@@ -156,6 +339,11 @@ for base_dir in train_list:
     x = rgb_filenames[0][0:-4]
     rgb_filenames.sort(key=lambda annotation: int(annotation[0:-4]))
     train_sample_num += len(rgb_filenames)
+'''
+
+
+
+
 
 from itertools import groupby
 class CSequence(Sequence):
@@ -186,7 +374,7 @@ class CSequence(Sequence):
             with open(data_path + fname, mode='r') as e_file:
                 reader = csv.reader(e_file)
                 your_list = list(reader)
-                for i in range(1,int(len(your_list)/3) ):
+                for i in range(1,int(len(your_list)),20 ):
                 #for i in range(1, 70000):
                     self.sample.append(your_list[i][0])
                     self.time.append(your_list[i][1])
@@ -353,9 +541,6 @@ def generatorPanda(features, labels, batch_size,filename):
 
 
 
-
-
-
 # Artificial data generation:
 # Generate movies with 3 to 7 moving squares inside.
 # The squares are of shape 1x1 or 2x2 pixels,
@@ -421,7 +606,7 @@ def generate_movies(n_samples=1200, n_frames=15):
 
 from tensorflow.keras.callbacks import ModelCheckpoint
 
-model_filename = 'lstm_model_vsalad4.h5'
+model_filename = 'lstm_model_vsalad5.h5'
 callback_checkpoint = ModelCheckpoint(
     model_filename,
     verbose=1,
@@ -507,7 +692,7 @@ history = seq.fit_generator(generator=train_gen,
                             workers=10,
                             use_multiprocessing=True,
                             max_queue_size=50,
-                            callbacks=[callback_checkpoint,MyCustomCallback(5)],
+                            callbacks=[callback_checkpoint,MyCustomCallback(50)],
                             epochs=50)
 # seq.load_weights("C:/Users/sheng/PycharmProjects/unet2/lstm/lstm_model_v1.h5")
 # Testing the network on one movie

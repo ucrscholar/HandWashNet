@@ -481,3 +481,8 @@ class MyCustomCallback(tensorflow.keras.callbacks.Callback):
         x='Training: epoch {}/{} begins at {}'.format(epoch, self.total, datetime.datetime.now().time())
         notify('convLSTM', x)
 
+class Notify():
+    def __init__(self, total=0):
+        self.total= total;
+        notify('empty GPU', 0)
+
