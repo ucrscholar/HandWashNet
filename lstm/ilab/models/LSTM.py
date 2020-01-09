@@ -18,15 +18,15 @@ def convLSTM(
                        input_shape=(None, m_width, m_heigh, 3),
                        padding='same', return_sequences=True))
     seq.add(BatchNormalization())
-
+    seq.add(Dropout(0.35))
     seq.add(ConvLSTM2D(filters=60, kernel_size=(3, 3),
                        padding='same', return_sequences=True))
     seq.add(BatchNormalization())
-
+    seq.add(Dropout(0.35))
     seq.add(ConvLSTM2D(filters=60, kernel_size=(3, 3),
                        padding='same', return_sequences=False))
     seq.add(BatchNormalization())
-
+    seq.add(Dropout(0.35))
     '''seq.add(ConvLSTM2D(filters=60, kernel_size=(3, 3),
                        padding='same', return_sequences=True))
     seq.add(BatchNormalization())
@@ -46,7 +46,7 @@ def convLSTM(
 
     seq.add(Flatten())
     seq.add(Dense(128, activation='relu'))
-    seq.add(Dropout(0.25))
+    seq.add(Dropout(0.35))
     seq.add(Dense(52, activation='softmax'))
     return seq;
 
