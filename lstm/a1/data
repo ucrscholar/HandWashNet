@@ -1,0 +1,25 @@
+Epoch 24/25
+1472/1500 [============================>.] - ETA: 0s - loss: 6.8171e-04 - accuracy: 1.0000 
+Epoch 00024: val_loss improved from 0.00076 to 0.00067, saving model to lstm_model_vsalad33.h5
+1500/1500 [==============================] - 16s 11ms/sample - loss: 6.7872e-04 - accuracy: 1.0000 - val_loss: 6.6551e-04 - val_accuracy: 1.0000
+Epoch 25/25
+1472/1500 [============================>.] - ETA: 0s - loss: 6.0487e-04 - accuracy: 1.0000 
+Epoch 00025: val_loss improved from 0.00067 to 0.00055, saving model to lstm_model_vsalad33.h5
+1500/1500 [==============================] - 16s 11ms/sample - loss: 6.0645e-04 - accuracy: 1.0000 - val_loss: 5.5393e-04 - val_accuracy: 1.0000
+No XVisualInfo for format QSurfaceFormat(version 2.0, options QFlags<QSurfaceFormat::FormatOption>(), depthBufferSize -1, redBufferSize 1, greenBufferSize 1, blueBufferSize 1, alphaBufferSize -1, stencilBufferSize -1, samples -1, swapBehavior QSurfaceFormat::SwapBehavior(SingleBuffer), swapInterval 1, profile  QSurfaceFormat::OpenGLContextProfile(NoProfile))
+Falling back to using screens root_visual.
+No XVisualInfo for format QSurfaceFormat(version 2.0, options QFlags<QSurfaceFormat::FormatOption>(), depthBufferSize -1, redBufferSize 1, greenBufferSize 1, blueBufferSize 1, alphaBufferSize -1, stencilBufferSize -1, samples -1, swapBehavior QSurfaceFormat::SwapBehavior(SingleBuffer), swapInterval 1, profile  QSurfaceFormat::OpenGLContextProfile(NoProfile))
+Falling back to using screens root_visual.
+loss: 0.000563, acc: 100.000000
+2020-01-09 21:23:57.345884: W tensorflow/core/grappler/optimizers/implementation_selector.cc:310] Skipping optimization due to error while loading function libraries: Invalid argument: Functions '__inference_cudnn_lstm_with_fallback_16388' and '__inference_cudnn_lstm_with_fallback_16388_specialized_for_sequential_lstm_StatefulPartitionedCall_at___inference_distributed_function_17089' both implement 'lstm_c3999377-2fcb-470b-aa99-94a4535b6541' but their signatures do not match.
+Expected: [array([1, 2, 3, 0])], Predicted: [[1 2 3 0]] 
+Expected: [array([1, 2, 3, 0])], Predicted: [[1 2 3 0]] 
+Expected: [array([1, 2, 3, 0])], Predicted: [[1 2 3 0]] 
+Expected: [array([1, 2, 3, 0])], Predicted: [[1 2 3 0]] 
+Expected: [array([1, 2, 3, 0])], Predicted: [[1 2 3 0]] 
+Expected: [array([1, 2, 3, 0])], Predicted: [[1 2 3 0]] 
+Expected: [array([1, 2, 3, 0])], Predicted: [[1 2 3 0]] 
+Expected: [array([1, 2, 3, 0])], Predicted: [[1 2 3 0]] 
+Expected: [array([1, 2, 3, 0])], Predicted: [[1 2 3 0]] 
+Expected: [array([1, 2, 3, 0])], Predicted: [[1 2 3 0]] 
+
