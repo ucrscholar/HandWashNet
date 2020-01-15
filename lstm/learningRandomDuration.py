@@ -48,12 +48,12 @@ tag = {0: 'NailWashLeft', 1: 'NailWashRight', 2: 'ThumbFingureWash', 3: 'ForeFin
 inv_tag = {v: k for k, v in tag.items()}
 
 ROOTPATH = './VRandom2/'
-SAMPLESNUM = 5000
+SAMPLESNUM = 4000
 ITERATE = 1
 # configure problem
 SIZE = 50
 SHUFF=True
-
+BATCHSIZE = 8
 
 def drawImage(img):
     f = pyplot.figure(figsize=(5, 5))
@@ -786,10 +786,15 @@ def models():
 
 
 model = models();
+
+from ilab.models import modelB
+
+model = modelB(SIZE, SIZE);
+
 print(model.summary())
 from tensorflow.keras.utils import plot_model
 
-plot_model(model, show_shapes=True, to_file=ROOTPATH + 'modelWH.png')
+plot_model(model, show_shapes=True, to_file=ROOTPATH + 'modelDemoStandardConvLSTMInception.png')
 
 
 def fit():
@@ -808,7 +813,7 @@ def fit():
 
         #if path.exists('lstm_model_vsalad33.h5'):
         #    model.load_weights('lstm_model_vsalad33.h5')
-        history = model.fit(X, y, batch_size=32, epochs=25, validation_split=0.01, shuffle=False,
+        history = model.fit(X, y, batch_size=BATCHSIZE, epochs=25, validation_split=0.01, shuffle=False,
                             callbacks=[callback_checkpoint])
         plot_segm_history(history, metrics=['loss', 'val_loss'], fileName1='loss33.png', fileName2='acc33.png')
 
@@ -829,7 +834,7 @@ def fit2():
         print('begin fit{}/{}'.format(i, SAMPLESNUM))
         #if path.exists(model_filename):
         #    model.load_weights(model_filename)
-        history = model.fit(X, y, batch_size=32,
+        history = model.fit(X, y, batch_size=BATCHSIZE,
                             epochs=1, validation_split=0.01,
                             shuffle=False,
                             workers=2,
@@ -855,7 +860,7 @@ def fitRandomDuration():
         print('begin fit{}/{}'.format(i, SAMPLESNUM))
         #if path.exists(model_filename):
         #    model.load_weights(model_filename)
-        history = model.fit(X, y, batch_size=32,
+        history = model.fit(X, y, batch_size=BATCHSIZE,
                             epochs=1, validation_split=0.01,
                             shuffle=False,
                             workers=2,
@@ -867,15 +872,15 @@ def fitRandomDuration():
 
 # evaluate model
 def eval(X, y):
-    loss, acc = model.evaluate(X, y, verbose=0)
+    loss, acc = model.evaluate(X, y, verbose=0,batch_size=BATCHSIZE)
     print('loss: %f, acc: %f' % (loss, acc * 100))
 
 
 def pred(X, Y):
     # prediction on new data
-    yhat = model.predict_classes(X, verbose=0)
+    yhat = model.predict(X, verbose=0,batch_size=BATCHSIZE)
     expected = [np.argmax(y, axis=1, out=None) for y in Y]
-    predicted = yhat
+    predicted = predicted = np.argmax(yhat, axis=1)
     print('Expected: %s, Predicted: %s ' % (expected, predicted))
 
 

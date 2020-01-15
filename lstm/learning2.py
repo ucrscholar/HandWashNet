@@ -1,6 +1,9 @@
 import os
 
+import tensorflow
 from sklearn.preprocessing import LabelEncoder
+from tensorflow_core.python.keras import Model
+from tensorflow_core.python.keras.backend import function, learning_phase
 from tensorflow_core.python.keras.layers import RepeatVector, BatchNormalization, Dropout
 from tensorflow_core.python.keras.utils import to_categorical
 import random as rand
@@ -39,7 +42,9 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 
-config = ConfigProto(allow_soft_placement=False)
+from tensorflow.keras.utils import plot_model
+
+config = ConfigProto(allow_soft_placement=True)
 config.gpu_options.per_process_gpu_memory_fraction = 0.9
 # config.gpu_options.allow_growth = True
 session = InteractiveSession(config=config)
@@ -47,12 +52,13 @@ session = InteractiveSession(config=config)
 tag = {0: 'NailWashLeft', 1: 'NailWashRight', 2: 'ThumbFingureWash', 3: 'ForeFingureWash'}
 inv_tag = {v: k for k, v in tag.items()}
 
-ROOTPATH = './VRandom1/'
-SAMPLESNUM = 3000
+ROOTPATH = './VRandom5/'
+SAMPLESNUM = 2000
 ITERATE = 1
 # configure problem
 SIZE = 50
-SHUFF=True
+SHUFF = False
+BATCHSIZE = 8
 
 
 # generate damped sine wave in [0,1]
@@ -525,9 +531,59 @@ def generate_examplesRandom(size, n_patterns):
     X = array(X).reshape(n_patterns, len(X[0]), size, size, 1)
     y = array(y).reshape(n_patterns, 4)
     labels = to_categorical(y, 4)
+    # labels2 = to_categorical(y2, 4)
 
     return X, labels
 
+
+# generate multiple sequences of frames and reshape for network input
+def generate_examplesRandom2(size, n_patterns):
+    X, y, y2 = list(), list(), list()
+    for i in range(n_patterns):
+        # print("gen{}/{}".format(i,n_patterns))
+        frames, labels = build_framesRandom(size)
+        code = np.array(labels)
+        label_encoder = LabelEncoder()
+        vec = label_encoder.fit_transform(code)
+
+        X.append(frames)
+        y.append(vec)
+        y2.append(1)
+    # resize as [samples, timesteps, width, height, channels]
+
+    X = array(X).reshape(n_patterns, len(X[0]), size, size, 1)
+    y = array(y).reshape(n_patterns, 4)
+    y2 = array(y2).reshape(n_patterns, 1)
+    labels = to_categorical(y, 4)
+    # labels2 = to_categorical(y2, 4)
+
+    return X, labels, y2
+
+
+# generate multiple sequences of frames and reshape for network input
+def generate_examplesRandom3(size, n_patterns):
+    X, X2, y, y2 = list(), list(), list(), list()
+    for i in range(n_patterns):
+        # print("gen{}/{}".format(i,n_patterns))
+        frames, labels = build_framesRandom(size)
+        code = np.array(labels)
+        label_encoder = LabelEncoder()
+        vec = label_encoder.fit_transform(code)
+
+        X.append(frames)
+        X2.append([0.0, 0.0, 0.0, 0.0])
+        y.append(vec)
+        y2.append(1)
+    # resize as [samples, timesteps, width, height, channels]
+
+    X = array(X).reshape(n_patterns, len(X[0]), size, size, 1)
+    X2 = array(X2).reshape(n_patterns, 4)
+    y = array(y).reshape(n_patterns, 4)
+    y2 = array(y2).reshape(n_patterns, 1)
+    labels = to_categorical(y, 4)
+    # labels2 = to_categorical(y2, 4)
+
+    return X, X2, labels, y2
 
 
 # define the model
@@ -539,7 +595,7 @@ model.add(LSTM(50))
 model.add(Dense(size*4, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])'''
 
-
+'''
 def models():
     # define LSTM
     model = Sequential()
@@ -567,18 +623,105 @@ def models():
 
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model;
+'''
 
 
-model = models();
+# from ilab.models import modelsStandard
+# model = modelsStandard(SIZE,SIZE);
+# from  ilab.models import modelStandardB
+# model = modelStandardB(SIZE,SIZE);
+def generate_movies(n_samples=10, n_frames=280):
+    noisy_movies = np.zeros((n_samples, n_frames, 256), dtype=np.float)
+    shifted_movies = np.zeros((n_samples, n_frames, 1), dtype=np.float)
+
+    for i in range(n_samples):
+        # Add 3 to 7 moving squares
+        n = np.random.randint(3, 8)
+
+        for j in range(n):
+            # Initial position
+            w = np.random.randint(2, 4)
+
+            for t in range(n_frames):
+                noisy_movies[i, t, :] = 1
+                shifted_movies[i, t, :] = 1
+    return noisy_movies, shifted_movies
+
+
+'''
+x, y = generate_movies()
+
+from ilab.models import ModelShare
+
+x1 = ModelShare()
+print(x1.summary())
+print(x1.metrics_names)
+plot_model(x1, show_shapes=True, to_file=ROOTPATH + 'modelShare.png')
+
+x1.fit([x, x], y, batch_size=2, nb_epoch=2, verbose=1)
+
+layer_name = 'lstm'
+intermediate_layer_model = Model(inputs=x1.input,
+                                 outputs=x1.get_layer(layer_name).output)
+intermediate_output = intermediate_layer_model.predict([x, x])
+
+from ilab.models import ModelInception
+
+x1 = ModelInception()
+print(x1.summary())
+print(x1.metrics_names)
+plot_model(x1, show_shapes=True, to_file=ROOTPATH + 'modelInception.png')
+
+from ilab.models import ModelResidual
+
+x1 = ModelResidual()
+print(x1.summary())
+print(x1.metrics_names)
+plot_model(x1, show_shapes=True, to_file=ROOTPATH + 'modelResidual.png')
+
+from ilab.models import ModelSharedVision
+
+x1 = ModelSharedVision()
+print(x1.summary())
+print(x1.metrics_names)
+plot_model(x1, show_shapes=True, to_file=ROOTPATH + 'modelSharedVision.png')
+
+from ilab.models import ModelVisualQuestionAnswering
+
+x1 = ModelVisualQuestionAnswering()
+print(x1.summary())
+print(x1.metrics_names)
+plot_model(x1, show_shapes=True, to_file=ROOTPATH + 'modelSharedVision.png')
+
+from ilab.models import ModelVideoQuestionAnswering
+
+x1 = ModelVideoQuestionAnswering()
+print(x1.summary())
+print(x1.metrics_names)
+plot_model(x1, show_shapes=True, to_file=ROOTPATH + 'modelSharedVideo.png')
+
+from ilab.models import modelA
+
+model = modelA(SIZE, SIZE);
+
 print(model.summary())
-from tensorflow.keras.utils import plot_model
+print(model.metrics_names)
 
 plot_model(model, show_shapes=True, to_file=ROOTPATH + 'modelWH.png')
+'''
+from ilab.models import modelC
+
+model = modelC(SIZE, SIZE);
+
+print(model.summary())
+print(model.metrics_names)
+
+plot_model(model, show_shapes=True, to_file=ROOTPATH + 'modelBInception.png')
 
 
 def fit():
     # fit model
-    model_filename = 'lstm_model_vsalad33.h5'
+    model_filename = ROOTPATH + 'lstm_model_v1.h5'
     callback_checkpoint = ModelCheckpoint(
         model_filename,
         verbose=1,
@@ -590,11 +733,12 @@ def fit():
         X, y = generate_examples(SIZE, 2000)
         print('begin fit{}/{}'.format(i, 10))
 
-        #if path.exists('lstm_model_vsalad33.h5'):
+        # if path.exists('lstm_model_vsalad33.h5'):
         #    model.load_weights('lstm_model_vsalad33.h5')
         history = model.fit(X, y, batch_size=32, epochs=25, validation_split=0.01, shuffle=False,
                             callbacks=[callback_checkpoint])
-        plot_segm_history(history, metrics=['loss', 'val_loss'], fileName1='loss33.png', fileName2='acc33.png')
+        plot_segm_history(history, metrics=['loss', 'val_loss'], fileName1=ROOTPATH + 'loss.png',
+                          fileName2=ROOTPATH + 'acc.png')
 
 
 def fit2():
@@ -611,9 +755,61 @@ def fit2():
 
         X, y = generate_examplesRandom(SIZE, SAMPLESNUM)
         print('begin fit{}/{}'.format(i, SAMPLESNUM))
-        #if path.exists(model_filename):
+        # if path.exists(model_filename):
         #    model.load_weights(model_filename)
-        history = model.fit(X, y, batch_size=32,
+        history = model.fit(X, y, batch_size=BATCHSIZE,
+                            epochs=1, validation_split=0.01,
+                            shuffle=False,
+                            workers=2,
+                            use_multiprocessing=True,
+                            callbacks=[callback_checkpoint])
+        # plot_segm_history(history, metrics=['loss', 'val_loss'], fileName1=ROOTPATH + 'loss.png',
+        #                  fileName2=ROOTPATH + 'acc.png')
+
+
+def fit3():
+    model_filename = ROOTPATH + 'lstm_model_v1.h5'
+    callback_checkpoint = ModelCheckpoint(
+        model_filename,
+        verbose=1,
+        monitor='val_loss',
+        save_best_only=True,
+    )
+    # fit model
+    for i in range(ITERATE):
+        print('begin gen')
+
+        X, y, y2 = generate_examplesRandom2(SIZE, SAMPLESNUM)
+        print('begin fit{}/{}'.format(i, SAMPLESNUM))
+        # if path.exists(model_filename):
+        #    model.load_weights(model_filename)
+        history = model.fit(X, {'main_output': y, 'aux_output': y2}, batch_size=32,
+                            epochs=1, validation_split=0.01,
+                            shuffle=False,
+                            workers=2,
+                            use_multiprocessing=True,
+                            callbacks=[callback_checkpoint])
+        plot_segm_history(history, metrics=['loss', 'val_loss'], fileName1=ROOTPATH + 'loss.png',
+                          fileName2=ROOTPATH + 'acc.png')
+
+
+def fit4():
+    model_filename = ROOTPATH + 'lstm_model_v1.h5'
+    callback_checkpoint = ModelCheckpoint(
+        model_filename,
+        verbose=1,
+        monitor='val_loss',
+        save_best_only=True,
+    )
+    # fit model
+    for i in range(ITERATE):
+        print('begin gen')
+
+        X, X2, y, y2 = generate_examplesRandom3(SIZE, SAMPLESNUM)
+        print('begin fit{}/{}'.format(i, SAMPLESNUM))
+        # if path.exists(model_filename):
+        #    model.load_weights(model_filename)
+        history = model.fit({'main_input': X, 'aux_input': X2}, {'main_output': y, 'aux_output': y2}, batch_size=32,
                             epochs=1, validation_split=0.01,
                             shuffle=False,
                             workers=2,
@@ -625,15 +821,50 @@ def fit2():
 
 # evaluate model
 def eval(X, y):
-    loss, acc = model.evaluate(X, y, verbose=0)
+    loss, acc = model.evaluate(X, y, verbose=0, batch_size=BATCHSIZE)
     print('loss: %f, acc: %f' % (loss, acc * 100))
+
+
+def eval2(X, y, y2):
+    loss, main_loss, aux_loss, main_acc, aux_acc = model.evaluate(X, {'main_output': y, 'aux_output': y2}, verbose=0)
+    print('loss: %f, acc: %f' % (loss, main_acc * 100))
+
+
+def eval3(X, X2, y, y2):
+    loss, main_loss, aux_loss, main_acc, aux_acc = model.evaluate({'main_input': X, 'aux_input': X2},
+                                                                  {'main_output': y, 'aux_output': y2}, verbose=0)
+    print('loss: %f, acc: %f' % (loss, main_acc * 100))
 
 
 def pred(X, Y):
     # prediction on new data
-    yhat = model.predict_classes(X, verbose=0)
+    # yhat = model.predict_classes(X, verbose=0)
+    yhat = model.predict(X, verbose=0, batch_size=BATCHSIZE)
+    predicted = np.argmax(yhat, axis=1)
     expected = [np.argmax(y, axis=1, out=None) for y in Y]
-    predicted = yhat
+
+    print('Expected: %s, Predicted: %s ' % (expected, predicted))
+
+
+def pred2(X, Y, y2):
+    # prediction on new data
+    # yhat = model.predict_classes(X, verbose=0)
+    yhat = model.predict(X, verbose=0)
+    predicted = np.argmax(yhat[0], axis=1)
+    predicted1 = np.argmax(yhat[1], axis=1)
+    expected = [np.argmax(y, axis=1, out=None) for y in Y]
+
+    print('Expected: %s, Predicted: %s ' % (expected, predicted))
+
+
+def pred3(X, X2, Y, y2):
+    # prediction on new data
+    # yhat = model.predict_classes(X, verbose=0)
+    yhat = model.predict(x={'main_input': X, 'aux_input': X2}, verbose=0)
+    predicted = np.argmax(yhat[0], axis=1)
+    predicted1 = np.argmax(yhat[1], axis=1)
+    expected = [np.argmax(y, axis=1, out=None) for y in Y]
+
     print('Expected: %s, Predicted: %s ' % (expected, predicted))
 
 
@@ -657,14 +888,40 @@ def testRandom():
     model.load_weights(ROOTPATH + 'lstm_model_v1.h5')
     X, y = generate_examplesRandom(SIZE, 5)
     eval(X, y)
-
     for i in range(10):
         X, y = generate_examplesRandom(SIZE, 1)
         pred(X, y)
 
 
+def testRandom2():
+    model.load_weights(ROOTPATH + 'lstm_model_v1.h5')
+    X, y, y2 = generate_examplesRandom2(SIZE, 5)
+    eval2(X, y, y2)
+
+    for i in range(10):
+        X, y, y2 = generate_examplesRandom2(SIZE, 1)
+        pred2(X, y, y2)
+
+
+def testRandom3():
+    model.load_weights(ROOTPATH + 'lstm_model_v1.h5')
+    X, X2, y, y2 = generate_examplesRandom3(SIZE, 5)
+    eval3(X, X2, y, y2)
+
+    for i in range(10):
+        X, X2, y, y2 = generate_examplesRandom3(SIZE, 1)
+        pred3(X, X2, y, y2)
+
+
 if __name__ == "__main__":
     print("Executed when invoked directly")
     # test2();
-    fit2();
+    # fit2();
+    # fit3();
+    # testRandom2();
+    # model A
+    # fit4();
+    # testRandom3()
+    # modelB
+    fit2()
     testRandom();
