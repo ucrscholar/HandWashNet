@@ -1,9 +1,12 @@
+import math
 from math import pi
 
 import numpy as np
 from matplotlib import pyplot
 from sklearn.preprocessing import LabelEncoder
+
 from tensorflow_core.python.keras.utils import to_categorical
+import random
 
 
 def generate_DampedSin(period, i, decay, amplify=1):
@@ -339,14 +342,19 @@ def build_frames(size, timeStep=0):
     return frames, labelA
 
 
-def GestureA(size):
+def GestureA(size,period = 100, type=0):
     frames = list()
     labelA = list()
 
     amplify = np.random.randint(5, 10) / 10.0
-    xratio = 2
-    yratio = 1
-    period = 100
+    xratio = 2  # rang(1,5)
+    yratio = 1  # rang(0.1,1,0.1)
+    zratio = size - yratio * size  # rang(0,size - yratio* size)
+    if type == 1 or type == 2:
+        xratio = np.random.randint(3, 5)  # rang(1,5)
+        yratio = np.random.randint(1, 10) / 10.0  # rang(0.1,1,0.1)
+        zratio = np.random.randint(0, size - yratio * size)  # rang(0,size - yratio* size)
+
     labelA.append('GestureA')
     x = list()
     y = list()
@@ -359,36 +367,51 @@ def GestureA(size):
     y2 = list()
     for i in range(0, period, xratio):
         # print(x[i], y[i])
-        x2.append(x[i])
-        y2.append(y[i] / yratio)
+        xx = x[i] / 100 * (size - 1)
+        yy = y[i] / 100 * (size - 1) * yratio + zratio
 
-    for xx, yy in zip(x2, y2):
-        #frame = frame.copy()
-        frame = np.zeros((size, size), dtype=int)
-        xx = xx / 100.0 * 49
-        yy = yy / 100.0 * 49
+        x2.append(xx)
+        y2.append(yy)
+        # frame = np.zeros((size, size), dtype=int)
+    for i,(xx, yy) in enumerate(zip(x2, y2)):
+        # frame = frame.copy()
+        if i < len(x2)-1:
+            frame = np.zeros((size, size), dtype=int)
+            frame[math.floor(yy), math.floor(xx)] = 1
+            frames.append(frame)
 
-        frame[int(xx), int(yy)] = 1
-        frames.append(frame.T)
+
         '''f = pyplot.figure(figsize=(5, 5))
         # create a grayscale subplot for each frame
         ax = f.add_subplot(1, 1, 1)
-        ax.imshow(frame.T, cmap='Greys')
+        ax.imshow(frame, cmap='Greys')
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
         pyplot.show()'''
+    '''if type == 1:
+        for i in range(0, size - len(x2)):
+            frame = np.zeros((size, size), dtype=int)
+            frames.append(frame)'''
+
+
 
     return frames, labelA
 
 
-def GestureB(size):
+def GestureB(size,period = 100,  type=0):
     frames = list()
     labelA = list()
 
     amplify = np.random.randint(5, 10) / 10.0
-    xratio = 2
-    yratio = 1
-    period = 100
+    xratio = 2  # range(2,5)
+    yratio = 0.5  # range(0.1,1,0.1)
+    zratio = size - yratio * size  # rang(0,size - yratio* size)
+    if type == 1 or type == 2:
+        xratio = np.random.randint(3, 5)  # rang(1,5)
+        yratio = np.random.randint(1, 10) / 10.0  # rang(0.1,1,0.1)
+        zratio = np.random.randint(0, size - yratio * size)  # rang(0,size - yratio* size)
+
+
     decay = 0.03
     labelA.append('GestureB')
     x = list()
@@ -402,39 +425,50 @@ def GestureB(size):
     y2 = list()
     for i in range(0, period, xratio):
         # print(x[i], y[i])
-        x2.append(x[i])
-        y2.append(y[i] / yratio)
-
-
+        xx = x[i] / 100 * (size - 1)
+        yy = y[i] / 100 * (size - 1) * yratio + zratio
+        x2.append(xx)
+        y2.append(yy)
+        #frame = np.zeros((size, size))
     for xx, yy in zip(x2, y2):
         frame = np.zeros((size, size))
         #frame = frame.copy()
-        xx = xx / 100.0 * 49
-        yy = yy / 100.0 * 49
-        frame[int(xx), int(yy)] = 1
-        frames.append(frame.T)
 
-        '''f = pyplot.figure(figsize=(5, 5))
+        frame[math.floor(yy), math.floor(xx)] = 1
+        frames.append(frame)
+
+        f = pyplot.figure(figsize=(5, 5))
         # create a grayscale subplot for each frame
-        ax = f.add_subplot(1, 1, 1)
-        ax.imshow(frame.T, cmap='Greys')
+        '''ax = f.add_subplot(1, 1, 1)
+        ax.imshow(frame, cmap='Greys')
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
         pyplot.show()'''
 
+    '''if type == 1:
+        for i in range(0, size - len(x2)):
+            frame = np.zeros((size, size), dtype=int)
+            frames.append(frame)'''
+
     return frames, labelA
 
 
-def GestureC(size):
+def GestureC(size,period = 100,  type=0):
     frames = list()
     labelA = list()
 
     amplify = np.random.randint(5, 10) / 10.0
     xratio = 2
     yratio = 1
-    period = 100
-
     R = 50
+    zratio = size - yratio * size  # rang(0,size - yratio* size)
+    if type == 1 or type == 2:
+        xratio = np.random.randint(3, 5)  # rang(1,5)
+        yratio = np.random.randint(1, 10) / 10.0  # rang(0.1,1,0.1)
+        zratio = np.random.randint(0, size - yratio * size)  # rang(0,size - yratio* size)
+        R = np.random.randint(40, 50)
+
+
     labelA.append('GestureC')
     x = list()
     y = list()
@@ -448,47 +482,58 @@ def GestureC(size):
     y2 = list()
     for i in range(0, period, xratio):
         # print(x[i], y[i])
-        x2.append(x[i])
-        y2.append(y[i] / yratio)
-
+        xx = x[i] / 100 * (size-1)
+        yy = y[i] / 100 * (size-1)* yratio + zratio
+        x2.append(xx)
+        y2.append(yy)
+        #frame = np.zeros((size, size))
     for xx, yy in zip(x2, y2):
         #frame = frame.copy()
         frame = np.zeros((size, size))
-        xx = xx / 100.0 * 49
-        yy = yy / 100.0 * 49
-        frame[int(xx), int(yy)] = 1
-        frames.append(frame.T)
 
-        '''f = pyplot.figure(figsize=(5, 5))
+        frame[math.floor(yy), math.floor(xx)] = 1
+        frames.append(frame)
+
+        f = pyplot.figure(figsize=(5, 5))
         # create a grayscale subplot for each frame
-        ax = f.add_subplot(1, 1, 1)
-        ax.imshow(frame.T, cmap='Greys')
+        '''ax = f.add_subplot(1, 1, 1)
+        ax.imshow(frame, cmap='Greys')
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
         pyplot.show()'''
 
+    '''if type == 1:
+        for i in range(0, size - len(x2)):
+            frame = np.zeros((size, size), dtype=int)
+            frames.append(frame)'''
 
     return frames, labelA
 
 
-def GestureD(size):
+def GestureD(size,period = 100,  type=0):
     frames = list()
     labelA = list()
 
     amplify = np.random.randint(5, 10) / 10.0
-    xratio = 2
-    yratio = 1
-    period = 100
-    decay = 3
-    A=100
-    P=25
+    xratio = 2 #range(1,5)
+    yratio = 1 #rang(0.1,1.0.1)
+    A = 100
+    P = 25
+    zratio = size - yratio * size  # rang(0,size - yratio* size)
+
+    if type == 1 or type == 2:
+        xratio = np.random.randint(3, 5)  # rang(1,5)
+        yratio = np.random.randint(1, 10) / 10.0  # rang(0.1,1,0.1)
+        zratio = np.random.randint(0, size - yratio * size)  # rang(0,size - yratio* size)
+
+
     labelA.append('GestureD')
     x = list()
     y = list()
 
     for i in range(0, period):
-        x1= i
-        y1 = (A/P) * (P - abs(i % (2*P) - P) )
+        x1 = i
+        y1 = (A / P) * (P - abs(i % (2 * P) - P))
         x.append(x1)
         y.append(y1)
 
@@ -496,27 +541,43 @@ def GestureD(size):
     y2 = list()
     for i in range(0, period, xratio):
         # print(x[i], y[i])
-        x2.append(x[i])
-        y2.append(y[i] / yratio)
-
+        xx = x[i] / 100 * (size-1)
+        yy = y[i] / 100 * (size-1)* yratio + zratio
+        x2.append(xx)
+        y2.append(yy)
+        #frame = np.zeros((size, size))
     for xx, yy in zip(x2, y2):
         #frame = frame.copy()
         frame = np.zeros((size, size))
-        xx = xx / 100 * 49
-        yy = yy / 100 * 49
-        frame[int(xx), int(yy)] = 1
+
+        frame[math.floor(xx), math.floor(yy)] = 1
         frames.append(frame.T)
 
-        '''f = pyplot.figure(figsize=(5, 5))
+        f = pyplot.figure(figsize=(5, 5))
         # create a grayscale subplot for each frame
-        ax = f.add_subplot(1, 1, 1)
+        '''ax = f.add_subplot(1, 1, 1)
         ax.imshow(frame.T, cmap='Greys')
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
         pyplot.show()'''
 
+    '''if type == 1:
+        for i in range(0, size - len(x2)):
+            frame = np.zeros((size, size), dtype=int)
+            frames.append(frame)'''
+
     return frames, labelA
 
+def GestureBackground(size, period = 5, type=0):
+    frames = list()
+    labelA = list()
+
+    labelA.append('Background')
+
+    for _ in range(0, period):
+        frame = np.zeros((size, size))
+        frames.append(frame.T)
+    return frames, labelA
 
 def GenNailLeftDuration(size):
     frames = list()
@@ -706,14 +767,94 @@ def build_frames_DB_A(size, timeStep=0, shuff=False):
 
     res = [0, 1, 2, 3]
     if shuff:
-        np.rand.shuffle(res)
+        random.shuffle(res)
     for i in res:
-        fa, la = my_list[res[i]](size)
+        fa, la = my_list[res[i]](period = 80, size=size)
         frames += fa
         labelA += la
+        fat = list()
+        lat = list()
+
+        if size - len(fa) > 0:
+            fa, la = GestureBackground(size, period=size - len(fa))
+            frames += fa
+            labelA += la
 
     return frames, labelA
 
+
+def build_frames_DB_B(size, timeStep=0, shuff=False):
+    frames = list()
+    labelA = list()
+    labelB = list()
+    labelC = list()
+
+    my_list = [GestureA, GestureB, GestureC, GestureD]
+
+    res = [0, 1, 2, 3]
+    if shuff:
+        random.shuffle(res)
+    for i in res:
+        fat = list()
+        lat = list()
+        fa, la = my_list[res[i]](size, type=1)
+        frames += fa
+        labelA += la
+        if size  - len(fa) > 0:
+            fa, la = GestureBackground(size, period=size  - len(fa))
+            frames += fa
+            labelA += la
+
+    return frames, labelA
+
+def build_frames_DB_C(size, timeStep=0, shuff=False):
+    frames = list()
+    labelA = list()
+    labelB = list()
+    labelC = list()
+    fat = list()
+    lat = list()
+    my_list = [GestureA, GestureB, GestureC, GestureD]
+
+    res = [0, 1, 2, 3]
+    if shuff:
+        random.shuffle(res)
+    for index, i in enumerate(res):
+        fa, la = my_list[res[i]](size, type=2)
+        frames += fa
+        labelA += la
+        if index != 3:
+            fa, la = GestureBackground(size, period=5)
+            frames += fa
+            labelA += la
+
+    if size*4 - len(frames)> 0:
+        fa, la = GestureBackground(size, period=size*4 - len(frames))
+        frames += fa
+        labelA += la
+
+
+    return frames, labelA
+
+def build_frames_DB_D(size, timeStep=0, shuff=False):
+    frames = list()
+    labelA = list()
+    labelB = list()
+    labelC = list()
+
+    my_list = [GestureA, GestureB, GestureC, GestureD]
+
+    res = [0, 1, 2, 3]
+    if shuff:
+        random.shuffle(res)
+    for i in res:
+        fa, la = my_list[res[i]](size, type=2)
+        frames += fa
+        labelA += la
+
+
+
+    return frames, labelA
 
 # generate a sequence of frames of a dot moving across an image
 def build_framesRandomDuration(size, timeStep=0, shuff=False):
@@ -822,7 +963,7 @@ def generate_DB_A(size, n_patterns, parameter=None):
     X, y = list(), list()
     for i in range(n_patterns):
         # print("gen{}/{}".format(i,n_patterns))
-        frames, labels = build_frames_DB_A(size,parameter['shuff'])
+        frames, labels = build_frames_DB_A(size=size, shuff=parameter['shuff'][0])
         code = np.array(labels)
         label_encoder = LabelEncoder()
         vec = label_encoder.fit_transform(code)
@@ -832,8 +973,8 @@ def generate_DB_A(size, n_patterns, parameter=None):
     # resize as [samples, timesteps, width, height, channels]
 
     X = np.array(X).reshape(n_patterns, len(X[0]), size, size, 1)
-    y = np.array(y).reshape(n_patterns, 4)
-    labels = to_categorical(y, 4)
+    y = np.array(y).reshape(n_patterns, 8)
+    labels = to_categorical(y, 8)
 
     return X, labels
 
@@ -843,7 +984,7 @@ def generate_DB_B(size, n_patterns, parameter=None):
     X, y = list(), list()
     for i in range(n_patterns):
         # print("gen{}/{}".format(i,n_patterns))
-        frames, labels = build_framesRandomDuration(size)
+        frames, labels = build_frames_DB_B(size, shuff=parameter['shuff'][0])
         code = np.array(labels)
         label_encoder = LabelEncoder()
         vec = label_encoder.fit_transform(code)
@@ -853,7 +994,45 @@ def generate_DB_B(size, n_patterns, parameter=None):
     # resize as [samples, timesteps, width, height, channels]
 
     X = np.array(X).reshape(n_patterns, len(X[0]), size, size, 1)
-    y = np.array(y).reshape(n_patterns, 4)
-    labels = to_categorical(y, 4)
+    y = np.array(y).reshape(n_patterns, 8)
+    labels = to_categorical(y, 8)
+
+    return X, labels
+# generate multiple sequences of frames and reshape for network input
+def generate_DB_C(size, n_patterns, parameter=None):
+    X, y = list(), list()
+    for i in range(n_patterns):
+        # print("gen{}/{}".format(i,n_patterns))
+        frames, labels = build_frames_DB_C(size, shuff=parameter['shuff'][0])
+        code = np.array(labels)
+        label_encoder = LabelEncoder()
+        vec = label_encoder.fit_transform(code)
+
+        X.append(frames)
+        y.append(vec)
+    # resize as [samples, timesteps, width, height, channels]
+
+    X = np.array(X).reshape(n_patterns, len(X[0]), size, size, 1)
+    y = np.array(y).reshape(n_patterns, 8)
+    labels = to_categorical(y, 8)
+
+    return X, labels
+
+def generate_DB_D(size, n_patterns, parameter=None):
+    X, y = list(), list()
+    for i in range(n_patterns):
+        # print("gen{}/{}".format(i,n_patterns))
+        frames, labels = build_frames_DB_D(size, shuff=parameter['shuff'][0])
+        code = np.array(labels)
+        label_encoder = LabelEncoder()
+        vec = label_encoder.fit_transform(code)
+
+        X.append(frames)
+        y.append(vec)
+    # resize as [samples, timesteps, width, height, channels]
+
+    X = np.array(X).reshape(n_patterns, len(X[0]), size, size, 1)
+    y = np.array(y).reshape(n_patterns, 5)
+    labels = to_categorical(y, 5)
 
     return X, labels
