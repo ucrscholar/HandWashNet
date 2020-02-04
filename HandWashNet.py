@@ -11,7 +11,7 @@ from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 
 config = ConfigProto(allow_soft_placement=False)
-config.gpu_options.per_process_gpu_memory_fraction = 0.9
+config.gpu_options.per_process_gpu_memory_fraction = 0.99
 # config.gpu_options.allow_growth = True
 session = InteractiveSession(config=config)
 
@@ -32,8 +32,8 @@ def modelStandard(x_train, y_train, x_val, y_val, params):
     history = model.fit(x_train, y_train, batch_size=params['batch_size'],
                         epochs=params['epochs'], validation_split=0.01,
                         shuffle=False,
-                        workers=2,
-                        use_multiprocessing=True)
+                        workers=1,
+                        use_multiprocessing=False)
 
     # evaluate on new data
     loss, acc = model.evaluate(x_val, y_val, verbose=0, batch_size=params['batch_size'])
@@ -41,8 +41,8 @@ def modelStandard(x_train, y_train, x_val, y_val, params):
 
     # prediction on new data
     yhat = model.predict(x_val, verbose=0, batch_size=params['batch_size'])
-    expected = [np.argmax(y_val, axis=1, out=None) for y in y_val]
-    predicted = predicted = np.argmax(yhat, axis=1)
+    expected = [np.argmax(y, axis=1, out=None) for y in y_val]
+    predicted = np.argmax(yhat, axis=2)
     print('Expected: %s, Predicted: %s ' % (expected, predicted))
 
     # finally we have to make sure that history object and model are returned
@@ -54,11 +54,9 @@ def DBA():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 30
+    SAMPLESNUM = 3000
     DBNUM = str(SAMPLESNUM)
-    ITERATE = 1
-    SHUFF = True
-    BATCHSIZE = 8
+
 
     p = {'modelStandard': {'Name': ['modelStandard'],
                            'dbnumber': [DBNUM],
@@ -82,8 +80,7 @@ def DBA():
                            'epochs': [1]},
          }
 
-    fileNameTrain = ''
-    fileNameLabel = ''
+
     if p['modelStandard']['shuff'][0] == False:
         fileNameTrain = ROOTPATH + DB + 'dba_train' + DBNUM + '.npy'
         fileNameLabel = ROOTPATH + DB + 'dba_label' + DBNUM + '.npy'
@@ -106,11 +103,8 @@ def DBARandomOrder():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 30
+    SAMPLESNUM = 3000
     DBNUM = str(SAMPLESNUM)
-    ITERATE = 1
-    SHUFF = True
-    BATCHSIZE = 8
 
     p = {'modelStandard': {'Name': ['modelStandard'],
                            'dbnumber': [DBNUM],
@@ -134,8 +128,6 @@ def DBARandomOrder():
                            'epochs': [1]},
          }
 
-    fileNameTrain = ''
-    fileNameLabel = ''
     if p['modelStandard']['shuff'][0] == True:
         fileNameTrain = ROOTPATH + DB + 'dba_train_shuff' + DBNUM + '.npy'
         fileNameLabel = ROOTPATH + DB + 'dba_label_shuff' + DBNUM + '.npy'
@@ -159,11 +151,8 @@ def DBB():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 30
+    SAMPLESNUM = 3000
     DBNUM = str(SAMPLESNUM)
-    ITERATE = 1
-    SHUFF = True
-    BATCHSIZE = 8
 
     p = {'modelStandard': {'Name': ['modelStandard'],
                            'dbnumber': [DBNUM],
@@ -187,8 +176,6 @@ def DBB():
                            'epochs': [1]},
          }
 
-    fileNameTrain = ''
-    fileNameLabel = ''
     if p['modelStandard']['shuff'][0] == False:
 
         fileNameTrain = ROOTPATH + DB + 'dbb_train' + DBNUM + '.npy'
@@ -212,11 +199,8 @@ def DBBRandomOrder():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 30
+    SAMPLESNUM = 3000
     DBNUM = str(SAMPLESNUM)
-    ITERATE = 1
-    SHUFF = True
-    BATCHSIZE = 8
 
     p = {'modelStandard': {'Name': ['modelStandard'],
                            'dbnumber': [DBNUM],
@@ -240,8 +224,6 @@ def DBBRandomOrder():
                            'epochs': [1]},
          }
 
-    fileNameTrain = ''
-    fileNameLabel = ''
     if p['modelStandard']['shuff'][0] == True:
         fileNameTrain = ROOTPATH + DB + 'dbb_train_shuff' + DBNUM + '.npy'
         fileNameLabel = ROOTPATH + DB + 'dbb_label_shuff' + DBNUM + '.npy'
@@ -265,7 +247,7 @@ def DBC():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 30
+    SAMPLESNUM = 3000
     DBNUM = str(SAMPLESNUM)
 
     p = {'modelStandard': {'Name': ['modelStandard'],
@@ -290,8 +272,7 @@ def DBC():
                            'epochs': [1]},
          }
 
-    fileNameTrain = ''
-    fileNameLabel = ''
+
     if p['modelStandard']['shuff'][0] == False:
         fileNameTrain = ROOTPATH + DB + 'dbc_train' + DBNUM + '.npy'
         fileNameLabel = ROOTPATH + DB + 'dbc_label' + DBNUM + '.npy'
@@ -314,7 +295,7 @@ def DBCRandomOrder():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 30
+    SAMPLESNUM = 3000
     DBNUM = str(SAMPLESNUM)
 
     p = {'modelStandard': {'Name': ['modelStandard'],
@@ -339,8 +320,7 @@ def DBCRandomOrder():
                            'epochs': [1]},
          }
 
-    fileNameTrain = ''
-    fileNameLabel = ''
+
     if p['modelStandard']['shuff'][0] == True:
         fileNameTrain = ROOTPATH + DB + 'dbc_train_shuff' + DBNUM + '.npy'
         fileNameLabel = ROOTPATH + DB + 'dbc_label_shuff' + DBNUM + '.npy'

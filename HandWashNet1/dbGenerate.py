@@ -973,8 +973,8 @@ def generate_DB_A(size, n_patterns, parameter=None):
     # resize as [samples, timesteps, width, height, channels]
 
     X = np.array(X).reshape(n_patterns, len(X[0]), size, size, 1)
-    y = np.array(y).reshape(n_patterns, 8)
-    labels = to_categorical(y, 8)
+    #y = np.array(y).reshape(n_patterns, 8)
+    labels = to_categorical(y, 5)
 
     return X, labels
 
@@ -994,8 +994,8 @@ def generate_DB_B(size, n_patterns, parameter=None):
     # resize as [samples, timesteps, width, height, channels]
 
     X = np.array(X).reshape(n_patterns, len(X[0]), size, size, 1)
-    y = np.array(y).reshape(n_patterns, 8)
-    labels = to_categorical(y, 8)
+    #y = np.array(y).reshape(n_patterns, 8)
+    labels = to_categorical(y, 5)
 
     return X, labels
 # generate multiple sequences of frames and reshape for network input
@@ -1013,8 +1013,8 @@ def generate_DB_C(size, n_patterns, parameter=None):
     # resize as [samples, timesteps, width, height, channels]
 
     X = np.array(X).reshape(n_patterns, len(X[0]), size, size, 1)
-    y = np.array(y).reshape(n_patterns, 8)
-    labels = to_categorical(y, 8)
+    #y = np.array(y).reshape(n_patterns, 8)
+    labels = to_categorical(y, 5)
 
     return X, labels
 
@@ -1032,7 +1032,7 @@ def generate_DB_D(size, n_patterns, parameter=None):
     # resize as [samples, timesteps, width, height, channels]
 
     X = np.array(X).reshape(n_patterns, len(X[0]), size, size, 1)
-    y = np.array(y).reshape(n_patterns, 5)
+    #y = np.array(y).reshape(n_patterns, 8)
     labels = to_categorical(y, 5)
 
     return X, labels

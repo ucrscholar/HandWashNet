@@ -23,7 +23,7 @@ def modelStandard(input_shape, parameter=None):
     model.add(LSTM(parameter['cell2'], return_sequences=True))
     # model.add(Dropout(0.25))
     model.add(BatchNormalization())
-    model.add(TimeDistributed(Dense(8, activation='softmax')))
+    model.add(TimeDistributed(Dense(5, activation='softmax')))
 
     # Replicates `model` on 8 GPUs.
     # This assumes that your machine has 8 available GPUs.
