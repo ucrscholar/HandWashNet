@@ -75,11 +75,11 @@ def modelA(row, col):
     auxiliary_input = Input(shape=(4,), name='aux_input')
     x = concatenate([lstm_output, auxiliary_input])
 
-    x = RepeatVector(4)(x)
+    x = RepeatVector(8)(x)
     x = LSTM(50, return_sequences=True)(x)
     # model.add(Dropout(0.25))
     x = BatchNormalization()(x)
-    output = TimeDistributed(Dense(4, activation='softmax'), name='main_output')(x)
+    output = TimeDistributed(Dense(5, activation='softmax'), name='main_output')(x)
 
     model = Model(inputs=[input, auxiliary_input], outputs=[output, auxiliary_output])
     model.compile(loss={'main_output': 'categorical_crossentropy', 'aux_output': 'binary_crossentropy'},
@@ -206,9 +206,9 @@ def modelDemoStandardConvLSTM(row, col):
     return model
 
 
-def modelDemoStandardConvLSTMInception(row, col):
+def modelDemoStandardConvLSTMInception(input_shape, parameter=None):
     # define LSTM
-    input = Input(shape=(None, row, col, 1), name='main_input')
+    input = Input(shape=input_shape, name='main_input')
 
     I_1 = TimeDistributed(Conv2D(16, (1, 1), activation='relu', padding='same', name='C_1'), name='I_11')(input)
     I_1 = TimeDistributed(Conv2D(16, (5, 5), activation='relu', padding='same', name='C_2'), name='I_12')(I_1)
@@ -222,10 +222,10 @@ def modelDemoStandardConvLSTMInception(row, col):
     x = ConvLSTM2D(filters=75, kernel_size=(3, 3), padding='same', return_sequences=False)(concatenate_output)
     x = (Flatten())(x)
 
-    x = RepeatVector(4)(x)
+    x = RepeatVector(8)(x)
     x = LSTM(50, return_sequences=True)(x)
 
-    output = TimeDistributed(Dense(4, activation='softmax'), name='main_output')(x)
+    output = TimeDistributed(Dense(5, activation='softmax'), name='main_output')(x)
 
     model = Model(inputs=[input], outputs=[output])
     model.compile(loss={'main_output': 'categorical_crossentropy'},

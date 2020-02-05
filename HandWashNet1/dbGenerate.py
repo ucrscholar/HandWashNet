@@ -5,8 +5,10 @@ import numpy as np
 from matplotlib import pyplot
 from sklearn.preprocessing import LabelEncoder
 
-from tensorflow_core.python.keras.utils import to_categorical
+#from tensorflow_core.python.keras.utils import to_categorical
 import random
+
+from tensorflow_core.python.keras.utils.np_utils import to_categorical
 
 
 def generate_DampedSin(period, i, decay, amplify=1):

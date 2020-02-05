@@ -5,7 +5,7 @@ from tensorflow.compat.v1 import InteractiveSession
 
 config = ConfigProto(allow_soft_placement=False)
 config.gpu_options.per_process_gpu_memory_fraction = 1
-# config.gpu_options.allow_growth = True
+config.gpu_options.allow_growth = True
 session = InteractiveSession(config=config)
 
 from os import path
@@ -16,14 +16,24 @@ from sklearn.model_selection import train_test_split
 import os.path
 import HandWashNet1.dbGenerate as db
 
-
+ROOTPATH = '/data1/shengjun/HandWash/'
+CURVERSION = 'v1/'
+DB = 'db/'
+SIZE = 50
+SAMPLESNUM = 2000
+DBNUM = str(SAMPLESNUM)
 
 
 def modelStandard(x_train, y_train, x_val, y_val, params):
+
     from HandWashNet1.HandWashModels import modelStandard
     SIZE = params['size']
     model = modelStandard(input_shape=(None, SIZE, SIZE, 1), parameter=params);
-
+    '''
+    from HandWashNet1.HandWashModels import modelDemoStandardConvLSTMInception
+    SIZE = params['size']
+    model = modelDemoStandardConvLSTMInception(input_shape=(None, SIZE, SIZE, 1), parameter=params);
+    '''
     print(model.summary())
     from tensorflow.keras.utils import plot_model
     plot_model(model, show_shapes=True,
@@ -53,14 +63,6 @@ def modelStandard(x_train, y_train, x_val, y_val, params):
 
 
 def DBA():
-    ROOTPATH = '/data1/shengjun/HandWash/'
-    CURVERSION = 'v1/'
-    DB = 'db/'
-    SIZE = 50
-    SAMPLESNUM = 2000
-    DBNUM = str(SAMPLESNUM)
-
-
     p = {'modelStandard': {'Name': ['modelStandard'],
                            'dbnumber': [DBNUM],
                            'shuff': [False],
@@ -74,9 +76,9 @@ def DBA():
                            'shapes': ['brick'],
                            'first_neuron': [32],
                            'dropout': [.2, .3],
-                           'cell1': [40, 50, 60, 70, 80],
-                           'cell2': [30, 40, 50, 60, 70],
-                           'batch_size': [4, 8, 16, 32],
+                           'cell1': [40, 60],
+                           'cell2': [30, 50],
+                           'batch_size': [4, 8, 16],
                            'num_layers': [5],
                            'output_activation': ['sigmoid'],
                            'filters': [64],
@@ -102,13 +104,6 @@ def DBA():
 
 
 def DBARandomOrder():
-    ROOTPATH = '/data1/shengjun/HandWash/'
-    CURVERSION = 'v1/'
-    DB = 'db/'
-    SIZE = 50
-    SAMPLESNUM = 2000
-    DBNUM = str(SAMPLESNUM)
-
     p = {'modelStandard': {'Name': ['modelStandard'],
                            'dbnumber': [DBNUM],
                            'shuff': [True],
@@ -122,9 +117,9 @@ def DBARandomOrder():
                            'shapes': ['brick'],
                            'first_neuron': [32],
                            'dropout': [.2, .3],
-                           'cell1': [40, 50, 60, 70, 80],
-                           'cell2': [30, 40, 50, 60, 70],
-                           'batch_size': [4, 8, 16, 32],
+                           'cell1': [40, 60],
+                           'cell2': [30, 50],
+                           'batch_size': [4, 8, 16],
                            'num_layers': [5],
                            'output_activation': ['sigmoid'],
                            'filters': [64],
@@ -136,7 +131,7 @@ def DBARandomOrder():
         fileNameLabel = ROOTPATH + DB + 'dba_label_shuff' + DBNUM + '.npy'
         if path.exists(fileNameTrain) and path.exists(fileNameLabel):
             X = load(fileNameTrain)
-            y = load()
+            y = load(fileNameLabel)
         else:
             X, y = db.generate_DB_A(size=SIZE, n_patterns=SAMPLESNUM, parameter=p['modelStandard'])
             save(fileNameTrain, X)
@@ -150,13 +145,6 @@ def DBARandomOrder():
 
 
 def DBB():
-    ROOTPATH = '/data1/shengjun/HandWash/'
-    CURVERSION = 'v1/'
-    DB = 'db/'
-    SIZE = 50
-    SAMPLESNUM = 2000
-    DBNUM = str(SAMPLESNUM)
-
     p = {'modelStandard': {'Name': ['modelStandard'],
                            'dbnumber': [DBNUM],
                            'shuff': [False],
@@ -170,9 +158,9 @@ def DBB():
                            'shapes': ['brick'],
                            'first_neuron': [32],
                            'dropout': [.2, .3],
-                           'cell1': [40, 50, 60, 70, 80],
-                           'cell2': [30, 40, 50, 60, 70],
-                           'batch_size': [4, 8, 16, 32],
+                           'cell1': [40, 60],
+                           'cell2': [30, 50],
+                           'batch_size': [4, 8, 16],
                            'num_layers': [5],
                            'output_activation': ['sigmoid'],
                            'filters': [64],
@@ -198,13 +186,6 @@ def DBB():
 
 
 def DBBRandomOrder():
-    ROOTPATH = '/data1/shengjun/HandWash/'
-    CURVERSION = 'v1/'
-    DB = 'db/'
-    SIZE = 50
-    SAMPLESNUM = 2000
-    DBNUM = str(SAMPLESNUM)
-
     p = {'modelStandard': {'Name': ['modelStandard'],
                            'dbnumber': [DBNUM],
                            'shuff': [True],
@@ -218,9 +199,9 @@ def DBBRandomOrder():
                            'shapes': ['brick'],
                            'first_neuron': [32],
                            'dropout': [.2, .3],
-                           'cell1': [40, 50, 60, 70, 80],
-                           'cell2': [30, 40, 50, 60, 70],
-                           'batch_size': [4, 8, 16, 32],
+                           'cell1': [40, 60],
+                           'cell2': [30, 50],
+                           'batch_size': [4, 8, 16],
                            'num_layers': [5],
                            'output_activation': ['sigmoid'],
                            'filters': [64],
@@ -246,13 +227,6 @@ def DBBRandomOrder():
 
 
 def DBC():
-    ROOTPATH = '/data1/shengjun/HandWash/'
-    CURVERSION = 'v1/'
-    DB = 'db/'
-    SIZE = 50
-    SAMPLESNUM = 2000
-    DBNUM = str(SAMPLESNUM)
-
     p = {'modelStandard': {'Name': ['modelStandard'],
                            'dbnumber': [DBNUM],
                            'shuff': [False],
@@ -266,9 +240,9 @@ def DBC():
                            'shapes': ['brick'],
                            'first_neuron': [32],
                            'dropout': [.2, .3],
-                           'cell1': [40, 50, 60, 70, 80],
-                           'cell2': [30, 40, 50, 60, 70],
-                           'batch_size': [4, 8, 16, 32],
+                           'cell1': [40, 60],
+                           'cell2': [30, 50],
+                           'batch_size': [4, 8, 16],
                            'num_layers': [5],
                            'output_activation': ['sigmoid'],
                            'filters': [64],
@@ -294,13 +268,6 @@ def DBC():
 
 
 def DBCRandomOrder():
-    ROOTPATH = '/data1/shengjun/HandWash/'
-    CURVERSION = 'v1/'
-    DB = 'db/'
-    SIZE = 50
-    SAMPLESNUM = 2000
-    DBNUM = str(SAMPLESNUM)
-
     p = {'modelStandard': {'Name': ['modelStandard'],
                            'dbnumber': [DBNUM],
                            'shuff': [True],
@@ -314,9 +281,9 @@ def DBCRandomOrder():
                            'shapes': ['brick'],
                            'first_neuron': [32],
                            'dropout': [.2, .3],
-                           'cell1': [40, 50, 60, 70, 80],
-                           'cell2': [30, 40, 50, 60, 70],
-                           'batch_size': [4, 8, 16, 32],
+                           'cell1': [40, 60],
+                           'cell2': [30, 50],
+                           'batch_size': [4, 8, 16],
                            'num_layers': [5],
                            'output_activation': ['sigmoid'],
                            'filters': [64],
@@ -347,11 +314,8 @@ if __name__ == "__main__":
     inv_tag = {v: k for k, v in tag.items()}
 
 
-
-
-
     print('DBA============================================')
-    DBA()
+    #DBA()
     print('DBARandomOrder===================================')
     DBARandomOrder()
     print('DBB==============================================')
