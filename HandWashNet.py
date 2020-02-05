@@ -1,3 +1,13 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+from tensorflow.compat.v1 import ConfigProto
+from tensorflow.compat.v1 import InteractiveSession
+
+config = ConfigProto(allow_soft_placement=False)
+config.gpu_options.per_process_gpu_memory_fraction = 1
+# config.gpu_options.allow_growth = True
+session = InteractiveSession(config=config)
+
 from os import path
 import numpy as np
 import talos
@@ -6,14 +16,7 @@ from sklearn.model_selection import train_test_split
 import os.path
 import HandWashNet1.dbGenerate as db
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
-from tensorflow.compat.v1 import ConfigProto
-from tensorflow.compat.v1 import InteractiveSession
 
-config = ConfigProto(allow_soft_placement=False)
-config.gpu_options.per_process_gpu_memory_fraction = 0.99
-# config.gpu_options.allow_growth = True
-session = InteractiveSession(config=config)
 
 
 def modelStandard(x_train, y_train, x_val, y_val, params):
@@ -54,7 +57,7 @@ def DBA():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 3000
+    SAMPLESNUM = 2000
     DBNUM = str(SAMPLESNUM)
 
 
@@ -103,7 +106,7 @@ def DBARandomOrder():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 3000
+    SAMPLESNUM = 2000
     DBNUM = str(SAMPLESNUM)
 
     p = {'modelStandard': {'Name': ['modelStandard'],
@@ -151,7 +154,7 @@ def DBB():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 3000
+    SAMPLESNUM = 2000
     DBNUM = str(SAMPLESNUM)
 
     p = {'modelStandard': {'Name': ['modelStandard'],
@@ -199,7 +202,7 @@ def DBBRandomOrder():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 3000
+    SAMPLESNUM = 2000
     DBNUM = str(SAMPLESNUM)
 
     p = {'modelStandard': {'Name': ['modelStandard'],
@@ -247,7 +250,7 @@ def DBC():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 3000
+    SAMPLESNUM = 2000
     DBNUM = str(SAMPLESNUM)
 
     p = {'modelStandard': {'Name': ['modelStandard'],
@@ -295,7 +298,7 @@ def DBCRandomOrder():
     CURVERSION = 'v1/'
     DB = 'db/'
     SIZE = 50
-    SAMPLESNUM = 3000
+    SAMPLESNUM = 2000
     DBNUM = str(SAMPLESNUM)
 
     p = {'modelStandard': {'Name': ['modelStandard'],
