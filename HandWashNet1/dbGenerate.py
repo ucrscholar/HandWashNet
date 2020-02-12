@@ -985,7 +985,7 @@ def generate_DB_A(size, n_patterns, parameter=None):
 def generate_DB_B(size, n_patterns, parameter=None):
     X, y = list(), list()
     for i in range(n_patterns):
-        # print("gen{}/{}".format(i,n_patterns))
+        print("gen{}/{}".format(i,n_patterns))
         frames, labels = build_frames_DB_B(size, shuff=parameter['shuff'][0])
         code = np.array(labels)
         label_encoder = LabelEncoder()
@@ -1006,7 +1006,7 @@ def generate_DB_B(size, n_patterns, parameter=None):
 def generate_DB_C(size, n_patterns, parameter=None):
     X, y = list(), list()
     for i in range(n_patterns):
-        # print("gen{}/{}".format(i,n_patterns))
+        print("gen{}/{}".format(i,n_patterns))
         frames, labels = build_frames_DB_C(size, shuff=parameter['shuff'][0])
         code = np.array(labels)
         label_encoder = LabelEncoder()
@@ -1026,7 +1026,7 @@ def generate_DB_C(size, n_patterns, parameter=None):
 def generate_DB_D(size, n_patterns, parameter=None):
     X, y = list(), list()
     for i in range(n_patterns):
-        # print("gen{}/{}".format(i,n_patterns))
+        print("gen{}/{}".format(i,n_patterns))
         frames, labels = build_frames_DB_D(size, shuff=parameter['shuff'][0])
         code = np.array(labels)
         label_encoder = LabelEncoder()

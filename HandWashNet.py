@@ -1,13 +1,16 @@
 import os
+
+
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 
 config = ConfigProto(allow_soft_placement=False)
 config.gpu_options.per_process_gpu_memory_fraction = 1
-config.gpu_options.allow_growth = True
+#config.gpu_options.allow_growth = True
 session = InteractiveSession(config=config)
 
+from tensorflow.keras.utils  import HDF5Matrix
 from os import path
 import numpy as np
 import talos
@@ -16,11 +19,17 @@ from sklearn.model_selection import train_test_split
 import os.path
 import HandWashNet1.dbGenerate as db
 
+
+import h5py
+
 ROOTPATH = '/data1/shengjun/HandWash/'
+#ROOTPATH = 'c:/videos/HandWash/'
+
 CURVERSION = 'v1/'
 DB = 'db/'
 SIZE = 50
-SAMPLESNUM = 2000
+SAMPLESNUM = 3000
+TRAININGNUM = 2500
 DBNUM = str(SAMPLESNUM)
 
 
@@ -44,7 +53,7 @@ def modelStandard(x_train, y_train, x_val, y_val, params):
 
     history = model.fit(x_train, y_train, batch_size=params['batch_size'],
                         epochs=params['epochs'], validation_split=0.01,
-                        shuffle=False,
+                        shuffle='batch',
                         workers=1,
                         use_multiprocessing=False)
 
@@ -87,17 +96,34 @@ def DBA():
 
 
     if p['modelStandard']['shuff'][0] == False:
-        fileNameTrain = ROOTPATH + DB + 'dba_train' + DBNUM + '.npy'
-        fileNameLabel = ROOTPATH + DB + 'dba_label' + DBNUM + '.npy'
-        if path.exists(fileNameTrain) and path.exists(fileNameLabel):
-            X = load(fileNameTrain)
-            y = load(fileNameLabel)
+        fileNameTrain = ROOTPATH + DB + 'dba_train' + DBNUM
+        fileNameLabel = ROOTPATH + DB + 'dba_label' + DBNUM
+        if path.exists(fileNameTrain+ '.h5') :
+            #X = load(fileNameTrain+ '.npy')
+            #y = load(fileNameLabel+ '.npy')
+#TODO: mofiy the label with a consit value but not the variable -- fileNameTrain
+            X_train = HDF5Matrix(fileNameTrain+'.h5', fileNameTrain, start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', fileNameLabel, start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', fileNameTrain, start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', fileNameLabel, start=TRAININGNUM, end=SAMPLESNUM)
+
         else:
             X, y = db.generate_DB_A(size=SIZE, n_patterns=SAMPLESNUM, parameter=p['modelStandard'])
-            save(fileNameTrain, X)
-            save(fileNameLabel, y)
+            save(fileNameTrain+ '.npy', X)
+            save(fileNameLabel+ '.npy', y)
+            f = h5py.File(fileNameTrain+'.h5', 'w')
+            # Creating dataset to store features
+            X_dset = f.create_dataset(fileNameTrain, X.shape, dtype='f')
+            X_dset[:] = X
+            y_dset = f.create_dataset(fileNameLabel, y.shape, dtype='i')
+            y_dset[:] = y
+            f.close()
+            X_train = HDF5Matrix(fileNameTrain+'.h5', fileNameTrain, start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', fileNameLabel, start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', fileNameTrain, start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', fileNameLabel, start=TRAININGNUM, end=SAMPLESNUM)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
+    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
     print("scan modelStandard")
     t = talos.Scan(x=X_train, y=y_train, x_val=X_test, y_val=y_test, params=p['modelStandard'], model=modelStandard,
                    reduction_metric='val_iou', experiment_name='modelStandard_DBA')
@@ -127,18 +153,36 @@ def DBARandomOrder():
          }
 
     if p['modelStandard']['shuff'][0] == True:
-        fileNameTrain = ROOTPATH + DB + 'dba_train_shuff' + DBNUM + '.npy'
-        fileNameLabel = ROOTPATH + DB + 'dba_label_shuff' + DBNUM + '.npy'
-        if path.exists(fileNameTrain) and path.exists(fileNameLabel):
-            X = load(fileNameTrain)
-            y = load(fileNameLabel)
+        fileNameTrain = ROOTPATH + DB + 'dba_train_shuff' + DBNUM
+        fileNameLabel = ROOTPATH + DB + 'dba_label_shuff' + DBNUM
+        if path.exists(fileNameTrain+'.h5'):
+            #X = load(fileNameTrain+ '.npy')
+            #y = load(fileNameLabel+ '.npy')
+
+            X_train = HDF5Matrix(fileNameTrain+'.h5', fileNameTrain, start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', fileNameLabel, start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', fileNameTrain, start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', fileNameLabel, start=TRAININGNUM, end=SAMPLESNUM)
+
         else:
             X, y = db.generate_DB_A(size=SIZE, n_patterns=SAMPLESNUM, parameter=p['modelStandard'])
-            save(fileNameTrain, X)
-            save(fileNameLabel, y)
+            save(fileNameTrain+ '.npy', X)
+            save(fileNameLabel+ '.npy', y)
+            f = h5py.File(fileNameTrain+'.h5', 'w')
+            # Creating dataset to store features
+            X_dset = f.create_dataset(fileNameTrain, X.shape, dtype='f')
+            X_dset[:] = X
+            y_dset = f.create_dataset(fileNameLabel, y.shape, dtype='i')
+            y_dset[:] = y
+            f.close()
 
+            X_train = HDF5Matrix(fileNameTrain+'.h5', fileNameTrain, start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', fileNameLabel, start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', fileNameTrain, start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', fileNameLabel, start=TRAININGNUM, end=SAMPLESNUM)
+            
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
+    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
     print("scan modelStandard")
     t = talos.Scan(x=X_train, y=y_train, x_val=X_test, y_val=y_test, params=p['modelStandard'], model=modelStandard,
                    reduction_metric='val_iou', experiment_name='modelStandardR_DBARandomOrder')
@@ -169,17 +213,35 @@ def DBB():
 
     if p['modelStandard']['shuff'][0] == False:
 
-        fileNameTrain = ROOTPATH + DB + 'dbb_train' + DBNUM + '.npy'
-        fileNameLabel = ROOTPATH + DB + 'dbb_label' + DBNUM + '.npy'
-        if path.exists(fileNameTrain) and path.exists(fileNameLabel):
-            X = load(fileNameTrain)
-            y = load(fileNameLabel)
+        fileNameTrain = ROOTPATH + DB + 'dbb_train' + DBNUM
+        fileNameLabel = ROOTPATH + DB + 'dbb_label' + DBNUM
+        if path.exists(fileNameTrain+'.h5'):
+            #X = load(fileNameTrain+ '.npy')
+            #y = load(fileNameLabel+ '.npy')
+
+            X_train = HDF5Matrix(fileNameTrain+'.h5', fileNameTrain, start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', fileNameLabel, start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', fileNameTrain, start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', fileNameLabel, start=TRAININGNUM, end=SAMPLESNUM)
+
         else:
             X, y = db.generate_DB_B(size=SIZE, n_patterns=SAMPLESNUM, parameter=p['modelStandard'])
-            save(fileNameTrain, X)
-            save(fileNameLabel, y)
+            save(fileNameTrain+ '.npy', X)
+            save(fileNameLabel+ '.npy', y)
+            f = h5py.File(fileNameTrain+'.h5', 'w')
+            # Creating dataset to store features
+            X_dset = f.create_dataset(fileNameTrain, X.shape, dtype='f')
+            X_dset[:] = X
+            y_dset = f.create_dataset(fileNameLabel, y.shape, dtype='i')
+            y_dset[:] = y
+            f.close()
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
+            X_train = HDF5Matrix(fileNameTrain+'.h5', fileNameTrain, start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', fileNameLabel, start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', fileNameTrain, start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', fileNameLabel, start=TRAININGNUM, end=SAMPLESNUM)
+
+    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
     print("scan modelStandard")
     t = talos.Scan(x=X_train, y=y_train, x_val=X_test, y_val=y_test, params=p['modelStandard'], model=modelStandard,
                    reduction_metric='val_iou', experiment_name='modelStandard_DBB')
@@ -209,18 +271,35 @@ def DBBRandomOrder():
          }
 
     if p['modelStandard']['shuff'][0] == True:
-        fileNameTrain = ROOTPATH + DB + 'dbb_train_shuff' + DBNUM + '.npy'
-        fileNameLabel = ROOTPATH + DB + 'dbb_label_shuff' + DBNUM + '.npy'
-        if path.exists(fileNameTrain) and path.exists(fileNameLabel):
-            X = load(fileNameTrain)
-            y = load()
+        fileNameTrain = ROOTPATH + DB + 'dbb_train_shuff' + DBNUM
+        fileNameLabel = ROOTPATH + DB + 'dbb_label_shuff' + DBNUM
+        if path.exists(fileNameTrain+'.h5') :
+            #X = load(fileNameTrain+ '.npy')
+            #y = load(fileNameLabel+ '.npy')
+
+            X_train = HDF5Matrix(fileNameTrain+'.h5', 'c:/videos/HandWash/db/dbb_train_shuff3000', start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', 'c:/videos/HandWash/db/dbb_label_shuff3000', start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', 'c:/videos/HandWash/db/dbb_train_shuff3000', start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', 'c:/videos/HandWash/db/dbb_label_shuff3000', start=TRAININGNUM, end=SAMPLESNUM)
+
         else:
             X, y = db.generate_DB_B(size=SIZE, n_patterns=SAMPLESNUM, parameter=p['modelStandard'])
-            save(fileNameTrain, X)
-            save(fileNameLabel, y)
+            save(fileNameTrain+ '.npy', X)
+            save(fileNameLabel+ '.npy', y)
+            f = h5py.File(fileNameTrain+'.h5', 'w')
+            # Creating dataset to store features
+            X_dset = f.create_dataset('Train', X.shape, dtype='f')
+            X_dset[:] = X
+            y_dset = f.create_dataset('Label', y.shape, dtype='i')
+            y_dset[:] = y
+            f.close()
+            X_train = HDF5Matrix(fileNameTrain+'.h5', 'Train', start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', 'Label', start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', 'Train', start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', 'Label', start=TRAININGNUM, end=SAMPLESNUM)
 
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
+    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
     print("scan modelStandard")
     t = talos.Scan(x=X_train, y=y_train, x_val=X_test, y_val=y_test, params=p['modelStandard'], model=modelStandard,
                    reduction_metric='val_iou', experiment_name='modelStandard_DBBRandomOrder')
@@ -251,17 +330,35 @@ def DBC():
 
 
     if p['modelStandard']['shuff'][0] == False:
-        fileNameTrain = ROOTPATH + DB + 'dbc_train' + DBNUM + '.npy'
-        fileNameLabel = ROOTPATH + DB + 'dbc_label' + DBNUM + '.npy'
-        if path.exists(fileNameTrain) and path.exists(fileNameLabel):
-            X = load(fileNameTrain)
-            y = load(fileNameLabel)
+        fileNameTrain = ROOTPATH + DB + 'dbc_train' + DBNUM
+        fileNameLabel = ROOTPATH + DB + 'dbc_label' + DBNUM
+        if path.exists(fileNameTrain+'.h5'):
+            #X = load(fileNameTrain+ '.npy')
+            #y = load(fileNameLabel+ '.npy')
+
+            X_train = HDF5Matrix(fileNameTrain+'.h5', 'c:/videos/HandWash/db/dbc_train3000', start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', 'c:/videos/HandWash/db/dbc_label3000', start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', 'c:/videos/HandWash/db/dbc_train3000', start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', 'c:/videos/HandWash/db/dbc_label3000', start=TRAININGNUM, end=SAMPLESNUM)
+
         else:
             X, y = db.generate_DB_C(size=SIZE, n_patterns=SAMPLESNUM, parameter=p['modelStandard'])
-            save(fileNameTrain, X)
-            save(fileNameLabel, y)
+            save(fileNameTrain+ '.npy', X)
+            save(fileNameLabel+ '.npy', y)
+            f = h5py.File(fileNameTrain+'.h5', 'w')
+            # Creating dataset to store features
+            X_dset = f.create_dataset(fileNameTrain, X.shape, dtype='f')
+            X_dset[:] = X
+            y_dset = f.create_dataset(fileNameLabel, y.shape, dtype='i')
+            y_dset[:] = y
+            f.close()
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
+            X_train = HDF5Matrix(fileNameTrain+'.h5', fileNameTrain, start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', fileNameLabel, start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', fileNameTrain, start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', fileNameLabel, start=TRAININGNUM, end=SAMPLESNUM)
+
+    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
     print("scan modelStandard")
     t = talos.Scan(x=X_train, y=y_train, x_val=X_test, y_val=y_test, params=p['modelStandard'], model=modelStandard,
                    reduction_metric='val_iou', experiment_name='modelStandard_DBC')
@@ -292,18 +389,37 @@ def DBCRandomOrder():
 
 
     if p['modelStandard']['shuff'][0] == True:
-        fileNameTrain = ROOTPATH + DB + 'dbc_train_shuff' + DBNUM + '.npy'
-        fileNameLabel = ROOTPATH + DB + 'dbc_label_shuff' + DBNUM + '.npy'
-        if path.exists(fileNameTrain) and path.exists(fileNameLabel):
-            X = load(fileNameTrain)
-            y = load()
+        fileNameTrain = ROOTPATH + DB + 'dbc_train_shuff' + DBNUM
+        fileNameLabel = ROOTPATH + DB + 'dbc_label_shuff' + DBNUM
+        if path.exists(fileNameTrain+'.h5'):
+            #X = load(fileNameTrain+ '.npy')
+            #y = load(fileNameLabel+ '.npy')
+
+
+            X_train = HDF5Matrix(fileNameTrain+'.h5', 'c:/videos/HandWash/db/dbc_train_shuff3000', start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', 'c:/videos/HandWash/db/dbc_label_shuff3000', start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', 'c:/videos/HandWash/db/dbc_train_shuff3000', start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', 'c:/videos/HandWash/db/dbc_label_shuff3000', start=TRAININGNUM, end=SAMPLESNUM)
+
         else:
             X, y = db.generate_DB_C(size=SIZE, n_patterns=SAMPLESNUM, parameter=p['modelStandard'])
-            save(fileNameTrain, X)
-            save(fileNameLabel, y)
+            save(fileNameTrain+ '.npy', X)
+            save(fileNameLabel+ '.npy', y)
+            f = h5py.File(fileNameTrain+'.h5', 'w')
+            # Creating dataset to store features
+            X_dset = f.create_dataset(fileNameTrain, X.shape, dtype='f')
+            X_dset[:] = X
+            y_dset = f.create_dataset(fileNameLabel, y.shape, dtype='i')
+            y_dset[:] = y
+            f.close()
+
+            X_train = HDF5Matrix(fileNameTrain+'.h5', fileNameTrain, start=0, end=TRAININGNUM)
+            y_train = HDF5Matrix(fileNameTrain+'.h5', fileNameLabel, start=0, end=TRAININGNUM)
+            X_test = HDF5Matrix(fileNameTrain + '.h5', fileNameTrain, start=TRAININGNUM, end=SAMPLESNUM)
+            y_test = HDF5Matrix(fileNameTrain + '.h5', fileNameLabel, start=TRAININGNUM, end=SAMPLESNUM)
 
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
+    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
     print("scan modelStandard")
     t = talos.Scan(x=X_train, y=y_train, x_val=X_test, y_val=y_test, params=p['modelStandard'], model=modelStandard,
                    reduction_metric='val_iou', experiment_name='modelStandard_DBCRandomOrder')
@@ -315,7 +431,7 @@ if __name__ == "__main__":
 
 
     print('DBA============================================')
-    #DBA()
+    DBA()
     print('DBARandomOrder===================================')
     DBARandomOrder()
     print('DBB==============================================')
