@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="shengjun@lambda-quad.engr.ucr.edu:22" compareModeInSync="TIMESTAMP">
+  <component name="PublishConfigData" autoUpload="Always" promptOnRemoteOverwrite="CHECK_TIMESTAMP" serverName="shengjun@lambda-quad.engr.ucr.edu:22" exclude=".svn;.idea;.DS_Store;.git;.hg;*.hprof;*.pyc" notifyRemoteChanges="true" compareModeInSync="TIMESTAMP" showNewOnTargetInSync="false" showExcludedInSync="true">
     <serverData>
       <paths name="shengjun@lambda-quad.engr.ucr.edu:22">
         <serverdata>

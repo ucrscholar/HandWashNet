@@ -1,0 +1,124 @@
+
+jpython:S1192½"QDefine a constant instead of duplicating this literal 'lstm_model_v1.h5' 5 times.(É·ñ†
+mpython:S1192³"ODefine a constant instead of duplicating this literal 'begin fit{}/{}' 3 times.(ïñÊÛúÿÿÿÿ
+cpython:S1192±"JDefine a constant instead of duplicating this literal 'begin gen' 3 times.(’ÙÑ«
+;python:S125,"Remove this commented out code.(Ø›çéùÿÿÿÿ
+opython:S1542:"RRename function "drawImage" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(³†Õñúÿÿÿÿ
+spython:S1542C"[Rename function "generate_DampedSin" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(èõ‹®
+€python:S1542F"cRename function "generate_DampedSinDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(é¹¬œüÿÿÿÿ
+zpython:S1542N"]Rename function "generate_sinDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Œ“öÀøÿÿÿÿ
+Dpython:S1481c"'Remove the unused local variable "mix".(‰“Ò‡ûÿÿÿÿ
+=python:S1481X"%Remove the unused local variable "d".(éìê…
+Dpython:S1481e"'Remove the unused local variable "max".(Ìà­éüÿÿÿÿ
+?python:S1481b"'Remove the unused local variable "miy".(ù¿å±
+?python:S1481d"'Remove the unused local variable "may".(É€©®
+Dpython:S1481}"'Remove the unused local variable "max".(Ìà­éüÿÿÿÿ
+?python:S1481z"'Remove the unused local variable "miy".(ù¿å±
+?python:S1481|"'Remove the unused local variable "may".(É€©®
+Dpython:S1481{"'Remove the unused local variable "mix".(‰“Ò‡ûÿÿÿÿ
+=python:S1481p"%Remove the unused local variable "d".(éìê…
+xpython:S1542l"`Rename function "generate_circleDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(–Úë¢
+_python:S1854‹"FRemove this assignment to local variable 't'; the value is never used.(»ÓÇ
+Epython:S1481ˆ"'Remove the unused local variable "x_0".(°¢îªüÿÿÿÿ
+>python:S1481Š"%Remove the unused local variable "d".(éìê…
+Epython:S1481‰"'Remove the unused local variable "y_0".(ó·€ıÿÿÿÿ
+ppython:S1542‡"WRename function "generate_Heart" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ß—œŸ
+_python:S1854¨"FRemove this assignment to local variable 't'; the value is never used.(»ÓÇ
+Epython:S1481¦"'Remove the unused local variable "y_0".(ó·€ıÿÿÿÿ
+Epython:S1481¥"'Remove the unused local variable "x_0".(°¢îªüÿÿÿÿ
+>python:S1481§"%Remove the unused local variable "d".(éìê…
+xpython:S1542¤"_Rename function "generate_HeartDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(™Äã«
+>python:S1481È"%Remove the unused local variable "d".(éìê…
+=python:S1481Ç"%Remove the unused local variable "p".(Ìˆør
+ypython:S1542Ä"[Rename function "generate_examplesX" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(èáÌæÿÿÿÿÿ
+7python:S125Ò"Remove this commented out code.(ûõØ
+Gpython:S1481è")Remove the unused local variable "lower".(ê´´‡ùÿÿÿÿ
+Gpython:S1481é")Remove the unused local variable "upper".(®¨Ğ©úÿÿÿÿ
+tpython:S1542æ"VRename function "next_frameSin" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(™ƒ²¿úÿÿÿÿ
+Gpython:S1481û")Remove the unused local variable "upper".(®¨Ğ©úÿÿÿÿ
+Gpython:S1481ú")Remove the unused local variable "lower".(ê´´‡ùÿÿÿÿ
+zpython:S1542ø"\Rename function "next_frameDampedSin" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ÑÒÅîûÿÿÿÿ
+Gpython:S1481Œ")Remove the unused local variable "lower".(ê´´‡ùÿÿÿÿ
+Gpython:S1481")Remove the unused local variable "upper".(®¨Ğ©úÿÿÿÿ
+xpython:S1542Š"_Rename function "next_frameDampedCircle" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ÀŞúå
+Gpython:S1481")Remove the unused local variable "lower".(ê´´‡ùÿÿÿÿ
+Gpython:S1481Ÿ")Remove the unused local variable "upper".(®¨Ğ©úÿÿÿÿ
+wpython:S1542œ"^Rename function "next_frameDampedHeart" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(õ»üî
+dpython:S1854í"KRemove this assignment to local variable 'radius'; the value is never used.(û…‹ù
+Hpython:S1481²"*Remove the unused local variable "labelB".(²âÅ®ÿÿÿÿÿ
+Cpython:S1481³"*Remove the unused local variable "labelC".(ÛÖ¤›
+tpython:S117±"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+tpython:S117²"WRename this local variable "labelB" to match the regular expression ^[_a-z][a-z0-9_]*$.(²âÅ®ÿÿÿÿÿ
+opython:S117³"WRename this local variable "labelC" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÛÖ¤›
+qpython:S117¯"TRename this parameter "timeStep" to match the regular expression ^[_a-z][a-z0-9_]*$.(Çµ£¿ûÿÿÿÿ
+<python:S125½"Remove this commented out code.(Îëê­üÿÿÿÿ
+<python:S125É"Remove this commented out code.(‚ÃŞùùÿÿÿÿ
+<python:S125Ö"Remove this commented out code.(‚ÃŞùùÿÿÿÿ
+<python:S125æ"Remove this commented out code.(‚ÃŞùùÿÿÿÿ
+<python:S125ô"Remove this commented out code.(‚ÃŞùùÿÿÿÿ
+tpython:S117ş"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+rpython:S1542ü"TRename function "GenNailLeft" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(†£…Úùÿÿÿÿ
+<python:S125"Remove this commented out code.(‚ÃŞùùÿÿÿÿ
+tpython:S117—"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+upython:S1542•"\Rename function "GenNailLeftDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(šÉÙ
+<python:S125­"Remove this commented out code.(ÊÁå§úÿÿÿÿ
+tpython:S117´"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+npython:S1542²"URename function "GenNailRight" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Ğ¬ôè
+<python:S125¾"Remove this commented out code.(‚ÃŞùùÿÿÿÿ
+tpython:S117Æ"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+vpython:S1542Ä"]Rename function "GenNailRightDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Ó½ò´
+<python:S125×"Remove this commented out code.(Û‚ƒôøÿÿÿÿ
+tpython:S117İ"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+upython:S1542Û"WRename function "GenThumbFinger" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ÙçØ’ûÿÿÿÿ
+<python:S125é"Remove this commented out code.(‚ÃŞùùÿÿÿÿ
+tpython:S117ò"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+}python:S1542ğ"_Rename function "GenThumbFingerDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(×‡ò¥ûÿÿÿÿ
+Cpython:S1481"*Remove the unused local variable "radius".(û…‹ù
+tpython:S117‹"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+tpython:S1542‰"VRename function "GenForeFinger" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.( ÑÌ—üÿÿÿÿ
+<python:S125•"Remove this commented out code.(‚ÃŞùùÿÿÿÿ
+Cpython:S1481 "*Remove the unused local variable "radius".(û…‹ù
+tpython:S117"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+|python:S1542›"^Rename function "GenForeFingerDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Èøªõùÿÿÿÿ
+Cpython:S1481¸"*Remove the unused local variable "labelC".(ÛÖ¤›
+Hpython:S1481·"*Remove the unused local variable "labelB".(²âÅ®ÿÿÿÿÿ
+tpython:S117¶"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+tpython:S117·"WRename this local variable "labelB" to match the regular expression ^[_a-z][a-z0-9_]*$.(²âÅ®ÿÿÿÿÿ
+opython:S117¸"WRename this local variable "labelC" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÛÖ¤›
+qpython:S117´"TRename this parameter "timeStep" to match the regular expression ^[_a-z][a-z0-9_]*$.(ËÀÁşÿÿÿÿ
+Hpython:S1481Î"*Remove the unused local variable "labelB".(²âÅ®ÿÿÿÿÿ
+Cpython:S1481Ï"*Remove the unused local variable "labelC".(ÛÖ¤›
+tpython:S117Í"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+tpython:S117Î"WRename this local variable "labelB" to match the regular expression ^[_a-z][a-z0-9_]*$.(²âÅ®ÿÿÿÿÿ
+opython:S117Ï"WRename this local variable "labelC" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÛÖ¤›
+lpython:S117Ë"TRename this parameter "timeStep" to match the regular expression ^[_a-z][a-z0-9_]*$.(†Ø÷š
+tpython:S1542Ë"[Rename function "build_framesRandom" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(†Ø÷š
+Hpython:S1481ã"*Remove the unused local variable "labelB".(²âÅ®ÿÿÿÿÿ
+Cpython:S1481ä"*Remove the unused local variable "labelC".(ÛÖ¤›
+tpython:S117â"WRename this local variable "labelA" to match the regular expression ^[_a-z][a-z0-9_]*$.(ıÖûíÿÿÿÿÿ
+tpython:S117ã"WRename this local variable "labelB" to match the regular expression ^[_a-z][a-z0-9_]*$.(²âÅ®ÿÿÿÿÿ
+opython:S117ä"WRename this local variable "labelC" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÛÖ¤›
+lpython:S117à"TRename this parameter "timeStep" to match the regular expression ^[_a-z][a-z0-9_]*$.(‚‘×Ò
+|python:S1542à"cRename function "build_framesRandomDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(‚‘×Ò
+spython:S1542ı"URename function "validateData" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(«ÍìÛúÿÿÿÿ
+7python:S125¡"Remove this commented out code.(¾Ò
+>python:S1481¨"%Remove the unused local variable "i".(–·¼á
+>python:S1481½"%Remove the unused local variable "i".(–·¼á
+>python:S1481Ò"%Remove the unused local variable "i".(–·¼á
+~python:S1542Ğ"`Rename function "generate_examplesRandom" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(…×¡•úÿÿÿÿ
+>python:S1481ç"%Remove the unused local variable "i".(–·¼á
+python:S1542å"hRename function "generate_examplesRandomDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(¿µ°
+7python:S125ú"Remove this commented out code.(æŸÈ¾
+7python:S125µ"Remove this commented out code.(ºß˜’
+7python:S125Ê"Remove this commented out code.(ñÚ¯€
+xpython:S1542Ö"ZRename function "fitRandomDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Ó×À¿üÿÿÿÿ
+7python:S125ä"Remove this commented out code.(ñÚ¯€
+jpython:S117ñ"MRename this parameter "X" to match the regular expression ^[_a-z][a-z0-9_]*$.(æĞ‘Éşÿÿÿÿ
+epython:S117ö"MRename this parameter "X" to match the regular expression ^[_a-z][a-z0-9_]*$.(Øå¤Ê
+epython:S117ö"MRename this parameter "Y" to match the regular expression ^[_a-z][a-z0-9_]*$.(Øå¤Ê
+>python:S1481‰"%Remove the unused local variable "i".(éŠ‰£
+>python:S1481“"%Remove the unused local variable "i".(éŠ‰£
+lpython:S1542"SRename function "testRandom" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Ê¡º 
+>python:S1481"%Remove the unused local variable "i".(éŠ‰£
+ypython:S1542˜"[Rename function "testRandomDuration" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ºóòùÿÿÿÿ
+<python:S125¤"Remove this commented out code.(Ÿ’ Íøÿÿÿÿ
