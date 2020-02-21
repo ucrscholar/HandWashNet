@@ -1,0 +1,9 @@
+round_epochs,loss,accuracy,val_loss,val_accuracy,Name,activation,batch_size,cell1,cell2,curversion,db,dbnumber,dropout,epochs,filters,first_neuron,losses,num_layers,optimizer,output_activation,rootpath,shapes,shuff,size
+1,0.8610051609771421,0.6837879,0.29860350996255874,0.895,modelB,relu,4,40,30,v1/,db/,3000,0.2,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,True,50
+1,1.4651925952506788,0.49944445,1.3560314178466797,0.5,modelB,relu,4,40,30,v1/,db/,3000,0.2,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,True,50
+1,1.0572971543639598,0.6158586,1.373611421585083,0.5,modelB,relu,4,40,30,v1/,db/,3000,0.3,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,True,50
+1,0.9141838227377997,0.6752525,1.0401621103286742,0.555,modelB,relu,4,40,30,v1/,db/,3000,0.3,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,True,50
+1,0.9332407883080569,0.6710606,0.5435785245895386,0.83,modelB,elu,4,40,30,v1/,db/,3000,0.2,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,True,50
+1,0.9114285513969382,0.67333335,0.6393336093425751,0.79,modelB,elu,4,40,30,v1/,db/,3000,0.2,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,True,50
+1,0.935534799246475,0.6611111,0.5582004344463348,0.765,modelB,elu,4,40,30,v1/,db/,3000,0.3,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,True,50
+1,0.8471307474555392,0.69878787,0.32242356657981874,0.9,modelB,elu,4,40,30,v1/,db/,3000,0.3,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,True,50

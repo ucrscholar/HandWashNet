@@ -1,9 +1,12 @@
+import tensorflow
+from talos.utils.gpu_utils import multi_gpu
 from tensorflow_core.python.keras import Input, Model
 from tensorflow_core.python.keras.engine.sequential import Sequential
 from tensorflow_core.python.keras.layers import TimeDistributed, Dropout, BatchNormalization, Conv2D, LSTM, \
     RepeatVector, Dense, concatenate, add, Embedding, ConvLSTM2D
 from tensorflow_core.python.keras.layers.core import Flatten, Activation
 from tensorflow_core.python.keras.layers.pooling import MaxPooling2D
+from tensorflow_core.python.keras.utils import multi_gpu_model
 
 
 def modelStandard(input_shape, parameter=None):
@@ -27,8 +30,8 @@ def modelStandard(input_shape, parameter=None):
 
     # Replicates `model` on 8 GPUs.
     # This assumes that your machine has 8 available GPUs.
-    # parallel_model = multi_gpu_model(model, gpus=[2])
-    # parallel_model.compile(loss='categorical_crossentropy',
+    #parallel_model = multi_gpu_model(model, gpus=2)
+    #parallel_model.compile(loss='categorical_crossentropy',
     #                       optimizer='adam', metrics=['accuracy'])
 
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -219,15 +222,23 @@ def modelDemoStandardConvLSTMInception(input_shape, parameter=None):
     concatenate_output = concatenate([I_1, I_2], axis=-1)
 
     # x = TimeDistributed(Flatten())(x)
-    x = ConvLSTM2D(filters=75, kernel_size=(3, 3), padding='same', return_sequences=False)(concatenate_output)
+    x = ConvLSTM2D(filters=32, kernel_size=(3, 3), padding='same', return_sequences=False)(concatenate_output)
+    #x = MaxPooling2D((3, 3), strides=(1, 1), padding='same', name='M_1')(x)
+
     x = (Flatten())(x)
 
     x = RepeatVector(8)(x)
     x = LSTM(50, return_sequences=True)(x)
 
     output = TimeDistributed(Dense(5, activation='softmax'), name='main_output')(x)
-
+    #with tensorflow.device('/cpu'):
     model = Model(inputs=[input], outputs=[output])
+    # compile the model with gpu
+
+    #parallel_model = multi_gpu_model(model, gpus=2)
+    #parallel_model.compile(loss={'main_output': 'categorical_crossentropy'},
+    #              loss_weights={'main_output': 1.}, optimizer='adam', metrics=['accuracy'])
+    #model = multi_gpu(model, gpus=[1, 2])
     model.compile(loss={'main_output': 'categorical_crossentropy'},
                   loss_weights={'main_output': 1.}, optimizer='adam', metrics=['accuracy'])
     return model

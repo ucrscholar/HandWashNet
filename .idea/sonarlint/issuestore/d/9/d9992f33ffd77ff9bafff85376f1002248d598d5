@@ -1,21 +1,23 @@
 
-jpython:S1542"ORename function "modelA" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(¡ØÓßùÿÿÿÿ
-}python:S1542"bRename function "modelDemoStandardConvLSTM" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ÑÂöæúÿÿÿÿ
-€python:S1542"eRename function "ModelVisualQuestionAnswering" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Žá€éùÿÿÿÿ
-fpython:S1854"KRemove this assignment to local variable 'output'; the value is never used.(ßËäùÿÿÿÿ
-python:S1542"dRename function "ModelVideoQuestionAnswering" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ÖÀÓüÿÿÿÿ
-9python:S125"Remove this commented out code.(¸ªàµùÿÿÿÿ
-9python:S125"Remove this commented out code.(ÊàÍ×þÿÿÿÿ
-€python:S1542"kRename function "modelDemoStandardConvLSTMInception" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ËìØ@
-lpython:S1542"VRename function "ModelResidual" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(î–ÙÖ
-epython:S1542"ORename function "modelB" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(¨ÝµÓ
-upython:S1542"ZRename function "modelDemoStandard" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(öŸàûÿÿÿÿ
-4python:S125"Remove this commented out code.(æŽ„‰
-upython:S1542"ZRename function "ModelSharedVision" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(¾´éÉüÿÿÿÿ
-npython:S1542"SRename function "ModelShare" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(•ÙÅ•ùÿÿÿÿ
-mpython:S1542"WRename function "modelStandardB" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(‘úãÉ
-epython:S1542"ORename function "modelC" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(˜ÖÍ’
-kpython:S1542"VRename function "modelStandard" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Ï¿ß-
-rpython:S1542"WRename function "ModelInception" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(„¨¡Ñûÿÿÿÿ
-4python:S125"Remove this commented out code.(¬ÊÂœ
-4python:S125"Remove this commented out code.(æŽ„‰
+Špython:S1542Ô"kRename function "modelDemoStandardConvLSTMInception" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ËìØ@8ÔË’Š„.
+Cpython:S125î"Remove this commented out code.(æÒ”Íýÿÿÿÿ8”üàŒ„.
+ppython:S1854š"KRemove this assignment to local variable 'output'; the value is never used.(ßËäùÿÿÿÿ8ÔË’Š„.
+>python:S125Å"Remove this commented out code.(æŽ„‰8ÔË’Š„.
+xpython:S1542÷"SRename function "ModelShare" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(•ÙÅ•ùÿÿÿÿ8ÔË’Š„.
+spython:S1542A"ORename function "modelA" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(¡ØÓßùÿÿÿÿ8ÔË’Š„.
+tpython:S1542"VRename function "modelStandard" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Ï¿ß-8ÔË’Š„.
+opython:S1542’"ORename function "modelC" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(˜ÖÍ’8ÔË’Š„.
+vpython:S1542)"WRename function "modelStandardB" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(‘úãÉ8ÔË’Š„.
+>python:S125"Remove this commented out code.(¬ÊÂœ8ÔË’Š„.
+npython:S1542`"ORename function "modelB" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(¨ÝµÓ8ÔË’Š„.
+Bpython:S125~"Remove this commented out code.(ÊàÍ×þÿÿÿÿ8ÔË’Š„.
+python:S1542¼"ZRename function "ModelSharedVision" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(¾´éÉüÿÿÿÿ8ÔË’Š„.
+‡python:S1542Â"bRename function "modelDemoStandardConvLSTM" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ÑÂöæúÿÿÿÿ8ÔË’Š„.
+python:S1542¯"ZRename function "modelDemoStandard" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(öŸàûÿÿÿÿ8ÔË’Š„.
+‰python:S1542û"dRename function "ModelVideoQuestionAnswering" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ÖÀÓüÿÿÿÿ8ÔË’Š„.
+Špython:S1542Õ"eRename function "ModelVisualQuestionAnswering" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Žá€éùÿÿÿÿ8ÔË’Š„.
+Bpython:S125h"Remove this commented out code.(¸ªàµùÿÿÿÿ8ÔË’Š„.
+>python:S125à"Remove this commented out code.(æŽ„‰8ÔË’Š„.
+>python:S125â"Remove this commented out code.(°îºÐ8´ž•©„.
+vpython:S1542¬"VRename function "ModelResidual" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(î–ÙÖ8ÔË’Š„.
+|python:S1542–"WRename function "ModelInception" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(„¨¡Ñûÿÿÿÿ8ÔË’Š„.

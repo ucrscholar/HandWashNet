@@ -1,0 +1,17 @@
+round_epochs,loss,accuracy,val_loss,val_accuracy,Name,activation,batch_size,cell1,cell2,curversion,db,dbnumber,dropout,epochs,filters,first_neuron,losses,num_layers,optimizer,output_activation,rootpath,shapes,shuff,size
+1,0.2429193027718275,0.92242426,0.006522220093756914,1.0,modelB,relu,4,40,30,v1/,db/,3000,0.2,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,1.4150575009740964,0.4678788,1.3706096410751343,0.5,modelB,relu,4,40,30,v1/,db/,3000,0.2,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.46679650376616705,0.8559596,0.022309821099042892,1.0,modelB,relu,4,40,30,v1/,db/,3000,0.3,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.30375140833245085,0.9129293,0.013643775135278702,1.0,modelB,relu,4,40,30,v1/,db/,3000,0.3,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.2421993750890698,0.92282826,0.0059328265488147736,1.0,modelB,relu,4,40,50,v1/,db/,3000,0.2,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,1.4270438976962156,0.47050506,1.3423054218292236,0.5,modelB,relu,4,40,50,v1/,db/,3000,0.2,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.23184333514008257,0.92585856,0.0042540191859006884,1.0,modelB,relu,4,40,50,v1/,db/,3000,0.3,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.23306460245841681,0.92444444,0.006073179952800274,1.0,modelB,relu,4,40,50,v1/,db/,3000,0.3,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.2530329750581748,0.91939396,0.004806497134268284,1.0,modelB,relu,4,60,30,v1/,db/,3000,0.2,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.2750612443638495,0.91333336,0.006869809702038765,1.0,modelB,relu,4,60,30,v1/,db/,3000,0.2,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,1.2670364424194953,0.49535355,1.1961190700531006,0.5,modelB,relu,4,60,30,v1/,db/,3000,0.3,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.28101639891927593,0.9191919,0.009855948388576508,1.0,modelB,relu,4,60,30,v1/,db/,3000,0.3,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.3360051945841523,0.8977778,0.012094341218471527,1.0,modelB,relu,4,60,50,v1/,db/,3000,0.2,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.2637261605123528,0.9292929,0.013506402261555195,1.0,modelB,relu,4,60,50,v1/,db/,3000,0.2,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.24658191355810774,0.92868686,0.006582094822078943,1.0,modelB,relu,4,60,50,v1/,db/,3000,0.3,1,64,32,logcosh,5,AdaDelta,sigmoid,/data1/shengjun/HandWash/,brick,False,50
+1,0.23156357943409622,0.93656564,0.009166785217821598,1.0,modelB,relu,4,60,50,v1/,db/,3000,0.3,1,64,32,logcosh,5,Adam,sigmoid,/data1/shengjun/HandWash/,brick,False,50

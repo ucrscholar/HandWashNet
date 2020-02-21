@@ -1,2 +1,3 @@
 
-=python:S125"Remove this commented out code.(ÖŸ©8Ä±ÿ€„.
+npython:S107."KMethod "__init__" has 9 parameters, which is greater than the 7 authorized.(¹¤Îôúÿÿÿÿ8ã—Š«„.
+gpython:S107i"IFunction "main" has 9 parameters, which is greater than the 7 authorized.(ÖÕ€—8ã—Š«„.

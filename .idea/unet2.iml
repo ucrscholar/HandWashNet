@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (unet2)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 2.7.12 (sftp://shengjun@lambda-quad.engr.ucr.edu:22/home/shengjun/anaconda3/bin/python3.7)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
