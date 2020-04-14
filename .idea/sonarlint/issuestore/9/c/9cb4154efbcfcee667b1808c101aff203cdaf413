@@ -1,64 +1,73 @@
 
-Apython:S1481"%Remove the unused local variable "t".(•£³!8—º¿‰„.
-python:S117"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(±£—ãüÿÿÿÿ8—º¿‰„.
-Rpython:S1481"0Remove the unused local variable "num_replicas".(óúÿÿÿÿ8Ë”Æ®„.
-rpython:S117"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(¼İÍA8—º¿‰„.
-tpython:S117"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(ƒèúŞ8—º¿‰„.
-python:S117"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(ª½ïµûÿÿÿÿ8—º¿‰„.
-;python:S125"Remove this commented out code.(ÖË±8—º¿‰„.
-tpython:S117"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(¼ÚàÏ8—º¿‰„.
-spython:S117"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8—º¿‰„.
-npython:S1542"LRename function "DBC" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ù€ƒ§ÿÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
-ypython:S117"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(Îı©×úÿÿÿÿ8—º¿‰„.
-spython:S117"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8—º¿‰„.
-@python:S125"Remove this commented out code.(“È¼ôúÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
-tpython:S1542"WRename function "DBARandomOrder" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(÷Ä‘­8—º¿‰„.
-Apython:S1481"%Remove the unused local variable "t".(•£³!8—º¿‰„.
-spython:S1542"VRename function "modelStandard" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Ÿ¾²Õ8—º¿‰„.
-tpython:S1542"WRename function "DBBRandomOrder" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.( ’…Ê8—º¿‰„.
-xpython:S117"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(ö¡óˆÿÿÿÿÿ8—º¿‰„.
-tpython:S1542"WRename function "DBCRandomOrder" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ï÷íŠ8—º¿‰„.
-@python:S125"Remove this commented out code.(íÓî¡ùÿÿÿÿ8ˆ¬ô®„.
-spython:S117"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8—º¿‰„.
-python:S117"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(¤şÜ¶ıÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(íÓî¡ùÿÿÿÿ8÷ñó®„.
-@python:S125"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
-Apython:S1481"%Remove the unused local variable "t".(•£³!8—º¿‰„.
-python:S117"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(“Õ©ºúÿÿÿÿ8—º¿‰„.
-spython:S117"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8—º¿‰„.
-xpython:S117"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(æÉÇÜşÿÿÿÿ8—º¿‰„.
-ipython:S1542"LRename function "DBB" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(Ìİ×8—º¿‰„.
-@python:S125"Remove this commented out code.(“È¼ôúÿÿÿÿ8—º¿‰„.
-python:S117"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(Û¥Àúÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(íÓî¡ùÿÿÿÿ8÷ñó®„.
-Apython:S1481"%Remove the unused local variable "t".(•£³!8—º¿‰„.
-upython:S1192"SDefine a constant instead of duplicating this literal "scan modelStandard" 6 times.(†Âƒñùÿÿÿÿ8—º¿‰„.
-Apython:S1481"%Remove the unused local variable "t".(•£³!8—º¿‰„.
-zpython:S117"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(É–ÎÁ8—º¿‰„.
-zpython:S117"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(™ø´à8—º¿‰„.
-spython:S117"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8—º¿‰„.
-tpython:S117"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(¼ÚàÏ8—º¿‰„.
-zpython:S117"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(û¬‘8—º¿‰„.
-Apython:S1481"%Remove the unused local variable "t".(•£³!8—º¿‰„.
-python:S117"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(‚ ¶ğüÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(“È¼ôúÿÿÿÿ8—º¿‰„.
-xpython:S117"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(æÉÇÜşÿÿÿÿ8—º¿‰„.
-spython:S117"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(£ƒ™€8—º¿‰„.
-python:S117"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(³Ò‘¡şÿÿÿÿ8—º¿‰„.
-python:S117"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(†ùÁÜüÿÿÿÿ8—º¿‰„.
-tpython:S117"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(¼ÚàÏ8—º¿‰„.
-@python:S125"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(“È¼ôúÿÿÿÿ8—º¿‰„.
-ypython:S117"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(¤øèïüÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(íÓî¡ùÿÿÿÿ8÷ñó®„.
-python:S117"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(¨Ş–Šıÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(íÓî¡ùÿÿÿÿ8÷ñó®„.
-ipython:S1542"LRename function "DBA" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(ÊÆæ8—º¿‰„.
-xpython:S117"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(æÉÇÜşÿÿÿÿ8—º¿‰„.
-spython:S117"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(œ’ßµ8—º¿‰„.
-@python:S125"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(“È¼ôúÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
-@python:S125"Remove this commented out code.(íÓî¡ùÿÿÿÿ8­€²­–.
+Dpython:S1481Ä"%Remove the unused local variable "t".(•£³!8—º¿‰„.
+Cpython:S125¼"Remove this commented out code.(“È¼ôúÿÿÿÿ8©¤·¤—.
+wpython:S117ç"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(¼ÚàÏ8—º¿‰„.
+}python:S117¥"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(É–ÎÁ8—º¿‰„.
+upython:S117¤"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(¼İÍA8—º¿‰„.
+|python:S117¢"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(Îı©×úÿÿÿÿ8—º¿‰„.
+wpython:S117„"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(ƒèúŞ8©¤·¤—.
+zpython:S117s"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(æÉÇÜşÿÿÿÿ8—º¿‰„.
+vpython:S117ò"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8—º¿‰„.
+upython:S117|"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8—º¿‰„.
+Bpython:S125S"Remove this commented out code.(íÓî¡ùÿÿÿÿ8÷ñó®„.
+Cpython:S125Ú"Remove this commented out code.(“È¼ôúÿÿÿÿ8—º¿‰„.
+vpython:S117Ë"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8©¤·¤—.
+vpython:S117ß"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(œ’ßµ8—º¿‰„.
+Cpython:S125¡"Remove this commented out code.(íÓî¡ùÿÿÿÿ8÷ñó®„.
+vpython:S117q"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(¼ÚàÏ8—º¿‰„.
+Dpython:S1481º"%Remove the unused local variable "t".(•£³!8—º¿‰„.
+vpython:S117†"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(œ’ßµ8©¤·¤—.
+Cpython:S125¿"Remove this commented out code.(íÓî¡ùÿÿÿÿ8ˆ¬ô®„.
+Cpython:S125"Remove this commented out code.(“È¼ôúÿÿÿÿ8—º¿‰„.
+|python:S117À"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(¤øèïüÿÿÿÿ8—º¿‰„.
+cpython:S3827ú"Clabels is not defined. Change its name or define it before using it(¨ú8œ¾¤—.
+{python:S117­"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(æÉÇÜşÿÿÿÿ8—º¿‰„.
+‚python:S117ÿ"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(“Õ©ºúÿÿÿÿ8—º¿‰„.
+„python:S1192İ"dDefine a constant instead of duplicating this literal 'c:/videos/HandWash/db/dbc_train3000' 4 times.(ƒèúŞ8©¤·¤—.
+Cpython:S125†"Remove this commented out code.(«‚·­úÿÿÿÿ8©¤·¤—.
+xpython:S1192‡"SDefine a constant instead of duplicating this literal "scan modelStandard" 7 times.(†Âƒñùÿÿÿÿ8—º¿‰„.
+‚python:S117â"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(¤şÜ¶ıÿÿÿÿ8—º¿‰„.
+‚python:S117Ø"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(“Õ©ºúÿÿÿÿ8©¤·¤—.
+wpython:S117«"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(¼ÚàÏ8—º¿‰„.
+Cpython:S125ó"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
+vpython:S117­"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(£ƒ™€8—º¿‰„.
+}python:S117¹"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(™ø´à8—º¿‰„.
+}python:S117º"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(û¬‘8—º¿‰„.
+Cpython:S125¸"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
+Cpython:S125ä"Remove this commented out code.(“È¼ôúÿÿÿÿ8—º¿‰„.
+‚python:S117¦"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(Û¥Àúÿÿÿÿ8—º¿‰„.
+Dpython:S1481ˆ"%Remove the unused local variable "t".(•£³!8©¤·¤—.
+Cpython:S125š"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
+vpython:S117"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8—º¿‰„.
+jpython:S3827ú"JDataGenerator is not defined. Change its name or define it before using it(¨ú8œ¾¤—.
+wpython:S117İ"XRename this local variable "X_train" to match the regular expression ^[_a-z][a-z0-9_]*$.(ƒèúŞ8—º¿‰„.
+{python:S117é"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(æÉÇÜşÿÿÿÿ8—º¿‰„.
+Vpython:S1481ú"6Remove the unused local variable "training_generator".(¨ú8œ¾¤—.
+‚python:S117á"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(³Ò‘¡şÿÿÿÿ8—º¿‰„.
+‚python:S117œ"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(ª½ïµûÿÿÿÿ8—º¿‰„.
+Xpython:S1481û"8Remove the unused local variable "validation_generator".(ë‡õ8œ¾¤—.
+Dpython:S1481Ù"%Remove the unused local variable "t".(•£³!8—º¿‰„.
+{python:S117Â"WRename this local variable "X_test" to match the regular expression ^[_a-z][a-z0-9_]*$.(ö¡óˆÿÿÿÿÿ8—º¿‰„.
+cpython:S3827ú"Cparams is not defined. Change its name or define it before using it(¨ú8œ¾¤—.
+Cpython:S125É"Remove this commented out code.(íÓî¡ùÿÿÿÿ8­€²­–.
+Dpython:S1481ÿ"%Remove the unused local variable "t".(•£³!8—º¿‰„.
+‚python:S117×"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(†ùÁÜüÿÿÿÿ8—º¿‰„.
+Tpython:S14810"0Remove the unused local variable "num_replicas".(óúÿÿÿÿ8Ë”Æ®„.
+vpython:S117è"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8—º¿‰„.
+vpython:S117¶"WRename this local variable "X_dset" to match the regular expression ^[_a-z][a-z0-9_]*$.(¶Ó¦Š8—º¿‰„.
+Cpython:S125"Remove this commented out code.(íÓî¡ùÿÿÿÿ8÷ñó®„.
+Cpython:S125Â"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
+Dpython:S1481õ"%Remove the unused local variable "t".(•£³!8—º¿‰„.
+‰python:S1192Ş"dDefine a constant instead of duplicating this literal 'c:/videos/HandWash/db/dbc_label3000' 4 times.(¸é‰øÿÿÿÿ8©¤·¤—.
+fpython:S3827ú"Fpartition is not defined. Change its name or define it before using it(¨ú8œ¾¤—.
+Cpython:S125Ÿ"Remove this commented out code.(“È¼ôúÿÿÿÿ8—º¿‰„.
+‚python:S117"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(‚ ¶ğüÿÿÿÿ8—º¿‰„.
+‚python:S117ş"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(†ùÁÜüÿÿÿÿ8©¤·¤—.
+Cpython:S125¨"Remove this commented out code.(“È¼ôúÿÿÿÿ8—º¿‰„.
+=python:S125"Remove this commented out code.(ÖË±8—º¿‰„.
+Dpython:S1481œ"%Remove the unused local variable "t".(•£³!8—º¿‰„.
+Cpython:S125×"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
+Cpython:S125ı"Remove this commented out code.(«‚·­úÿÿÿÿ8—º¿‰„.
+python:S117l"^Rename this local variable "fileNameLabel" to match the regular expression ^[_a-z][a-z0-9_]*$.(¨Ş–Šıÿÿÿÿ8—º¿‰„.
+python:S117k"^Rename this local variable "fileNameTrain" to match the regular expression ^[_a-z][a-z0-9_]*$.(±£—ãüÿÿÿÿ8—º¿‰„.
+Cpython:S125„"Remove this commented out code.(íÓî¡ùÿÿÿÿ8÷ñó®„.

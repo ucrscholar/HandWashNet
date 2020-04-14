@@ -22,3 +22,5 @@ H
 pytorchClassification.py,7\9\7967c18b66adbd6212feb15551778b5a719a61f8
 H
 experimentDataProcess.py,a\e\aee7b0f780326ce85d6be622e76e852fdd8187fa
+H
+HandWashNet1/dbReader.py,4\7\47769e8fa8c81fbbe3353cc2eaa3c6c857cefb4a
