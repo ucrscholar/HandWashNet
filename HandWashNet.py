@@ -1,13 +1,13 @@
 import os
 
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 
 config = ConfigProto(allow_soft_placement=True)
 config.gpu_options.per_process_gpu_memory_fraction = 1
-config.gpu_options.allow_growth = False
+config.gpu_options.allow_growth = True
 session = InteractiveSession(config=config)
 
 import tensorflow as tf
@@ -20,6 +20,7 @@ from sklearn.model_selection import train_test_split
 import os.path
 import HandWashNet1.dbGenerate as db
 
+import HandWashNet1.dbReader as dbR
 
 import h5py
 
@@ -372,6 +373,45 @@ def DBC(p):
     t = talos.Scan(x=X_train, y=y_train, x_val=X_test, y_val=y_test, params=p['modelStandard'], model=modelStandard,
                    reduction_metric='val_iou', experiment_name=p['modelStandard']['Name'][0]+'_DBC')
 
+def DBHandWashVideo(p):
+
+    #10 videos
+    #14 samples every videos
+    #100 frames every samples
+    #speed kernel compared with google kernel
+
+    # Parameters
+    params = {'dim': (50, 50),
+              'batch_size': 1,
+              'n_classes': 8,
+              'n_channels': 1,
+              'shuffle': True}
+
+    # Datasets
+    partition = {'train': ['IntelRealSenseD415_816612062554_20200326_160813', 'IntelRealSenseD415_816612062554_20200326_161125'], 'validation': ['IntelRealSenseD415_816612062554_20200326_161316']} # IDs
+    labels = {'G1':0,'G2':1,'G3':2,'G4':3,'G5':4,'G6':5,'G7':6,'BK':7} # Labels
+    # Generators
+    training_generator = dbR.DataGenerator(partition['train'], labels, **params)
+    validation_generator = dbR.DataGenerator(partition['validation'], labels, **params)
+
+    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
+    print("scan modelStandard")
+
+    from HandWashNet1.HandWashModels import modelDemoStandardConvLSTMInception
+
+
+    model = modelDemoStandardConvLSTMInception(input_shape=(None, 50, 50, 1), parameter=params);
+
+    print(model.summary())
+
+    # if we want to also test for number of layers and shapes, that's possible
+    # hidden_layers(model, params, 1)
+    # Train model on dataset
+    model.fit_generator(generator=training_generator,
+                        validation_data=validation_generator,
+                        )
+
+
 
 def DBCRandomOrder(p):
     '''p = {'modelStandard': {'Name': ['modelStandard'],
@@ -488,9 +528,9 @@ if __name__ == "__main__":
     print('DBBRandomOrder==================================')
     #DBBRandomOrder(p)
     print('DBC=============================================')
-    DBC(p)
+    #DBC(p)
     print('DBCRandomOrder==================================')
-    DBCRandomOrder(p)
+    #DBCRandomOrder(p)
 
-
+    DBHandWashVideo(p)
 

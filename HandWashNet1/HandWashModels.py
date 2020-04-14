@@ -6,7 +6,6 @@ from tensorflow_core.python.keras.layers import TimeDistributed, Dropout, BatchN
     RepeatVector, Dense, concatenate, add, Embedding, ConvLSTM2D
 from tensorflow_core.python.keras.layers.core import Flatten, Activation
 from tensorflow_core.python.keras.layers.pooling import MaxPooling2D
-from tensorflow_core.python.keras.utils import multi_gpu_model
 
 
 def modelStandard(input_shape, parameter=None):
@@ -230,7 +229,7 @@ def modelDemoStandardConvLSTMInception(input_shape, parameter=None):
     x = RepeatVector(8)(x)
     x = LSTM(50, return_sequences=True)(x)
 
-    output = TimeDistributed(Dense(5, activation='softmax'), name='main_output')(x)
+    output = TimeDistributed(Dense(8, activation='softmax'), name='main_output')(x)
     #with tensorflow.device('/cpu'):
     model = Model(inputs=[input], outputs=[output])
     # compile the model with gpu
