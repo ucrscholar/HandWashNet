@@ -1,5 +1,5 @@
 import os
-
+import random as rd
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 from tensorflow.compat.v1 import ConfigProto
@@ -374,42 +374,52 @@ def DBC(p):
                    reduction_metric='val_iou', experiment_name=p['modelStandard']['Name'][0]+'_DBC')
 
 def DBHandWashVideo(p):
-
-    #10 videos
-    #14 samples every videos
-    #100 frames every samples
-    #speed kernel compared with google kernel
+    # 10 videos
+    # 14 samples every videos
+    # 100 frames every samples
+    # speed kernel compared with google kernel
 
     # Parameters
-    params = {'dim': (50, 50),
+    params = {'dim': (100, 100),
               'batch_size': 1,
               'n_classes': 8,
               'n_channels': 1,
               'shuffle': True}
 
     # Datasets
-    partition = {'train': ['IntelRealSenseD415_816612062554_20200326_160813', 'IntelRealSenseD415_816612062554_20200326_161125'], 'validation': ['IntelRealSenseD415_816612062554_20200326_161316']} # IDs
-    labels = {'G1':0,'G2':1,'G3':2,'G4':3,'G5':4,'G6':5,'G7':6,'BK':7} # Labels
+    partition = {
+        'train': ['IntelRealSenseD415_816612062554_20200326_160813', 'IntelRealSenseD415_816612062554_20200326_161125',
+                  'IntelRealSenseD415_816612062554_20200326_161316', 'IntelRealSenseD415_816612062554_20200326_161410',
+                  'IntelRealSenseD415_816612062554_20200326_161456', 'IntelRealSenseD415_816612062554_20200326_161543',
+                  'IntelRealSenseD415_816612062554_20200326_161624', 'IntelRealSenseD415_816612062554_20200326_161707',
+                  'IntelRealSenseD415_816612062554_20200326_161752', 'IntelRealSenseD415_816612062554_20200326_161910',
+                  'IntelRealSenseD415_816612062554_20200326_161951', 'IntelRealSenseD415_816612062554_20200326_162047',
+                  'IntelRealSenseD415_816612062554_20200326_162127', 'IntelRealSenseD415_816612062554_20200326_162206',
+                  'IntelRealSenseD415_816612062554_20200326_162247', 'IntelRealSenseD415_816612062554_20200326_162324',
+                  'IntelRealSenseD415_816612062554_20200326_162418', 'IntelRealSenseD415_816612062554_20200326_162512'],
+        'validation': ['IntelRealSenseD415_816612062554_20200326_162559',
+                       'IntelRealSenseD415_816612062554_20200326_162648']}  # IDs
+    labels = {'G1': 0, 'G2': 1, 'G3': 2, 'G4': 3, 'G5': 4, 'G6': 5, 'G7': 6, 'BK': 7}  # Labels
     # Generators
     training_generator = dbR.DataGenerator(partition['train'], labels, **params)
     validation_generator = dbR.DataGenerator(partition['validation'], labels, **params)
 
-    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.01, random_state=42)
     print("scan modelStandard")
 
     from HandWashNet1.HandWashModels import modelDemoStandardConvLSTMInception
 
-
-    model = modelDemoStandardConvLSTMInception(input_shape=(None, 50, 50, 1), parameter=params);
+    model = modelDemoStandardConvLSTMInception(input_shape=(None, 100, 100, 1), parameter=params);
 
     print(model.summary())
 
     # if we want to also test for number of layers and shapes, that's possible
     # hidden_layers(model, params, 1)
     # Train model on dataset
-    model.fit_generator(generator=training_generator,
-                        validation_data=validation_generator,
-                        )
+    for i in range(0, 50):
+        model.fit_generator(generator=training_generator,
+                            validation_data=validation_generator,
+                            )
 
 
 
@@ -531,6 +541,7 @@ if __name__ == "__main__":
     #DBC(p)
     print('DBCRandomOrder==================================')
     #DBCRandomOrder(p)
+
 
     DBHandWashVideo(p)
 

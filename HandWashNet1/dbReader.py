@@ -20,7 +20,8 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
         self.n_classes = n_classes
         self.shuffle = shuffle
         self.on_epoch_end()
-
+        self.root = 'D:/data1/'
+        #self.root = '/data1/shengjun/handWashDB/data1/'
 
     def __len__(self):
         'Denotes the number of batches per epoch'
@@ -38,7 +39,7 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
         IDs = index%14 *4
 
         # Accessing a text file - www.101computing.net/mp3-playlist/
-        fileNameTrain = "D:/data1/" + samples + '.dat'
+        fileNameTrain = self.root + samples + '.dat'
         file = open(fileNameTrain, "r")
 
         # Repeat for each song in the text file
@@ -80,22 +81,30 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
 
 
         # Generate data
-        NameA =fields[IDs]
+        NameA = fields[IDs]
         va = np.long(fields[IDs + 1])
-        NameB = fields[IDs+2]
-        vb = np.long(fields[IDs+3])
+        NameB = fields[IDs + 2]
+        vb = np.long(fields[IDs + 3])
         Name = NameA[0:2]
+        x = vb - va
+        dis = 150
+        win = x if x < dis else dis
+
+        diff = x - dis
+
+        start = 0 if diff <= 0 else rd.randrange(0, diff, 30)
+        print('diff, start: %d,%d' % (diff, start))
 
         X = np.empty((self.samples, vb-va, *self.dim, self.n_channels))
         y = np.empty((self.samples), dtype=int)
-        for i in range(0,vb-va):
+        for i in range(0,win):
             # load the image
-            fileName = "D:/data1/" + samples + '/_Color_'+str(va+i)+'.png'
+            fileName = self.root + samples + '/_Color_'+str(va+i+start)+'.png'
             image = cv2.imread(fileName)
             # convert image to numpy array
             # Store sample
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            gray_image2 = cv2.resize(gray_image,(50,50))
+            gray_image2 = cv2.resize(gray_image,(100,100))
             data = np.expand_dims(gray_image2, axis=-1)
             X[0,i,] = data
 
