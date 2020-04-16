@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow.keras
 from PIL import Image
 from numpy import asarray
-
+import random as rd
 
 class DataGenerator(tensorflow.keras.utils.Sequence):
     'Generates data for Keras'
@@ -87,13 +87,13 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
         vb = np.long(fields[IDs + 3])
         Name = NameA[0:2]
         x = vb - va
-        dis = 150
+        dis = 100
         win = x if x < dis else dis
 
         diff = x - dis
 
         start = 0 if diff <= 0 else rd.randrange(0, diff, 30)
-        print('diff, start: %d,%d' % (diff, start))
+        print(' diff, start, name: %d,%d, %s \n' % (diff, start, Name))
 
         X = np.empty((self.samples, vb-va, *self.dim, self.n_channels))
         y = np.empty((self.samples), dtype=int)
